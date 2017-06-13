@@ -1,0 +1,27 @@
+#contact-info {
+  font-size: .8em;
+}
+
+
+.job {
+  background-color:#e9e5dc;
+  border-radius: 25px;
+  padding: 0.2em 0.5em 0.2em 0.5em;
+  margin-top: 4px;
+}
+
+.accomplishments {
+  font-size: .8em;
+}
+
+a.email:hover{
+  font-weight: bold;
+}
+
+li.featured {
+  font-style: italic;
+}
+
+section.job h3 {
+  font-style: italic;
+}
