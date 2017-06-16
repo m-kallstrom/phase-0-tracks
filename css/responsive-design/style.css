@@ -1,3 +1,13 @@
+body {
+  max-width: 960px;
+}
+
+main {
+  position: relative;
+  margin-left: 200px;
+  width: 756px;
+}
+
 blockquote {
   border-left: 5px solid blue;
   padding: 15px;
@@ -9,13 +19,20 @@ cite {
   margin-top: 10px;
 }
 
+#external-links {
+  width: 200px;
+  display: vertical-align;
+  position: fixed;
+
+}
+
 #external-links ul {
   list-style-type: none;
   padding-left: 0px;
 }
 
 /* you're welcome to edit the
-image, figure, and figcaption CSS if you'd like, 
+image, figure, and figcaption CSS if you'd like,
 but it's optional! */
 img {
   width: 100%;
