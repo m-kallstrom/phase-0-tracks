@@ -4,9 +4,11 @@ body {
 
 main {
   position: relative;
-  margin-left: 200px;
+  margin-left: 30%;
   max-width: 75%;
   padding-left: 2em;
+  padding-right: 2em;
+  background-color: darkmagenta;
 
 }
 
@@ -49,6 +51,24 @@ figcaption {
   font-style: italic;
   text-align: right;
 }
+
+@media screen and (max-width: 500px) {
+  main {
+    padding-left: 0em;
+    margin-left: 25%;
+    background-color: hotpink;
+  }
+}
+
+@media screen and (min-width: 500px) and (max-width: 1000px) {
+  main {
+    padding-right: 4em;
+    margin-left: 25%;
+    background-color: aqua;
+  }
+}
+
+
 /*
 @media screen and (max-width: 500px) {
   body {
