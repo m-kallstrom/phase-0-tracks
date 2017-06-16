@@ -1,23 +1,25 @@
 img {
- position: absolute;
+   position: absolute;
+   transform: translate(-50%, -50%)
 }
 
 #glasses {
-  z-index: 1;
-  top: 225px;
-  margin-left: 50.5%;
-  margin-right: -49.5%;
+    z-index: 1;
+    top: 232px;
+    margin-left: 50%;
+    margin-right: -50%;
 }
 
 #hat {
-  top: 120px;
-  margin-left: 51%;
-  margin-right: -49%;
+    top: 120px;
+    margin-left: 51%;
+    margin-right: -49%;
 }
 
 #octopus {
-  z-index: -1;
-  top: 240px;
-  margin-left: 50%;
-  margin-right: -50%;
+    position: relative;
+    z-index: -1;
+    top: 240px;
+    margin-left: 50%;
+    margin-right: -50%;
 }
