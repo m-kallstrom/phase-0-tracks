@@ -1,0 +1,25 @@
+img {
+   position: absolute;
+   transform: translate(-50%, -50%)
+}
+
+#glasses {
+    z-index: 1;
+    top: 232px;
+    margin-left: 49.5%;
+    margin-right: -50.5%;
+}
+
+#hat {
+    top: 120px;
+    margin-left: 51%;
+    margin-right: -49%;
+}
+
+#octopus {
+    position: relative;
+    z-index: -1;
+    top: 240px;
+    margin-left: 50%;
+    margin-right: -50%;
+}
