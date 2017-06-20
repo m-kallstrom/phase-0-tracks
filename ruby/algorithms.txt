@@ -1,6 +1,14 @@
-In phase-0-tracks/ruby/algorithms.txt, write the algorithm for using an elevator. Remember, robots are not smart at all, so you'll have to spell everything out.
-
-For instance, how will your robot figure out which floor button to press?
+Release 0: Elevator Assist Robot
+- Greet entering human and ask what floor they want to go to
+-Remember the floor number
+-Look at the first button on the panel
+  -If the button does not match the floor number:
+    -Say "hmm..."
+    -Look at the next button
+  -Otherwise, if they do match:
+    -Say "Here we go"
+    -Press button
+-Tell the human to have a nice day
 
 Release 1: Find a Real-Life Algorithm
 You're a smart human, not a dumb computer. That means you likely follow algorithms on a daily basis without even knowing it, taking your astonishing abilities completely for granted.
