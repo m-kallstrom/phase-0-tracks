@@ -18,8 +18,12 @@ age = gets.chomp
   else
     age = age.to_i
   end
-puts "Hamster name: #{hamster_name}."
-puts "Squeak volume: #{volume}."
-puts "Fur color: #{fur_color}."
+puts "Hamster name: #{hamster_name}"
+puts "Squeak volume: #{volume}"
+puts "Fur color: #{fur_color}"
 puts "Good candidate for adoption? #{good_for_adoption}"
-puts "Estimated age: #{age}"
+if age == nil
+  puts "Estimated age: Unknown"
+else
+  puts "Estimated age: #{age}"
+end
