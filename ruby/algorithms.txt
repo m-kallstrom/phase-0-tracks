@@ -1,0 +1,11 @@
+In phase-0-tracks/ruby/algorithms.txt, write the algorithm for using an elevator. Remember, robots are not smart at all, so you'll have to spell everything out.
+
+For instance, how will your robot figure out which floor button to press?
+
+Release 1: Find a Real-Life Algorithm
+You're a smart human, not a dumb computer. That means you likely follow algorithms on a daily basis without even knowing it, taking your astonishing abilities completely for granted.
+
+DO THE THING
+Come up with an example of a common task in your life that could be translated into an algorithm, and write out the steps in algorithms.txt (labeled with the name of the task).
+
+Submit the GitHub URL of your file to complete this challenge.
