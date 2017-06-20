@@ -1,0 +1,43 @@
+Release 0: Elevator Assist Robot
+-Greet entering human and ask what floor they want to go to
+-Remember the floor number
+-Look at the first button on the panel
+  -If the button does not match the floor number:
+    -Say "hmm..."
+    -Look at the next button
+  -Otherwise, if they do match:
+    -Say "Here we go"
+    -Press button
+-Tell the human to have a nice day
+
+
+Release 1: Make Oatmeal
+
+-Ingredients are: oatmeal, salt, milk
+-Utensils are: bowl, spoon
+-Gather ingredients and utensils
+-There is nothing in the bowl
+  -Add one pinch salt
+  -Until there are two scoops of oatmeal
+    -Add a scoop of oatmeal
+  -While oatmeal looks dry
+    -Add milk
+-Stir
+-Put in microwave for 2 minutes
+  -Until microwave goes "beep beep beep beep beep"
+    -Stare hungrily at microwave
+-Touch bowl
+  -If ridiculously hot
+    -get pot-holder
+    -remove bowl to counter
+  -Or if cold
+    -microwave is broken
+    -abort mission and forage for food in the cabinets
+  -Otherwise
+    -remove bowl to counter
+-Stir
+-Add more milk
+  -Until oatmeal looks like soup
+    -Add more milk
+-Put ingredients back in cabinet
+-Eat oatmeal
