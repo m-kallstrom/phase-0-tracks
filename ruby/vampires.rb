@@ -1,6 +1,7 @@
-  puts "How many employees need to be processed today?"
-  number_of_employees = gets.chomp.to_i
+puts "How many employees need to be processed today?"
+number_of_employees = gets.chomp.to_i
 
+#Employee question portion
 until number_of_employees == 0
   puts "Welcome to the team! We're just going to ask you a few on-boarding questions. No need to be nervous, so just sit back and say whatever comes to mind."
   puts "What is your name?"
@@ -16,7 +17,6 @@ until number_of_employees == 0
     end
   puts "Our company serves garlic bread, but it's so popular it sells out almost immediately. Should we order some for you?"
   likes_garlic_bread = gets.chomp.downcase
-  #Maybe this should be a case where you can add in several affirmatives. Yes, yeah, yep, hell yeah, etc.
     if likes_garlic_bread == "y" || likes_garlic_bread == "yes"
       likes_garlic_bread = true
     else
@@ -29,29 +29,28 @@ until number_of_employees == 0
     until allergy == "done"
       puts "Okay, and the next one?"
       allergy = gets.chomp
-      if allergy == "sunshine"
+      if allergy == "sunshine" || allergy == "sunlight"
         puts "Okay and the next one?"
+        sun_allergy = true
         allergy = gets.chomp
-        vampire = true
       end
   end
+
+#Vampire Checking portion
+  if name == "Drake Cula" || name == "Tu Fang"
+    puts "---> Probably a vampire."
+  elsif sun_allergy == true
+    puts "---> Probably a vampire."
+  elsif age == true && (likes_garlic_bread == true || wants_health_insurance == true)
+    puts "---> Probably NOT a vampire."
+  elsif age == false && (likes_garlic_bread == false || wants_health_insurance == false)
+    puts "---> Probably a vampire."
+  elsif age == false && (likes_garlic_bread == false && wants_health_insurance == false)
+    puts "---> Almost certainly a vampire"
+  else
+    puts "---> Results inconclusive"
+  end
+
+# Move onto the next employee
   number_of_employees = number_of_employees - 1
 end
-
-# Need to change something to case
-#possibly the counter decreaser needs to go elsewhere
-#Or possibly the allergy checker needs to go into teh questions at the end. Potentially fixed allergy checker.
-
-  if age == true && (likes_garlic_bread == true || wants_health_insurance == true)
-    puts "Probably not a vampire."
-  elsif age == false && (likes_garlic_bread == false || wants_health_insurance == false)
-    puts "Probably a vampire."
-  elsif age == false && (likes_garlic_bread == false && wants_health_insurance == false)
-    puts "Almost certainly a vampire"
-  elsif name == "Drake Cula" || name == "Tu Fang"
-    puts "Definitely a vampire!"
-  elsif vampire == true
-    puts "Probably a vampire"
-  else
-    puts "Results inconclusive"
-  end
