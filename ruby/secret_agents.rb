@@ -66,18 +66,18 @@ p decrypter_program(encrypter_program("swordfish"))
 #DRIVER CODE
 
 #Ask a secret agent whether they would like to decrypt or encrypt a password:
-puts "Greetings, Agent. Which program would you like to run: encryption or decryption?"
-program = gets.chomp.downcase!
+puts "Greetings, Agent. Which do you want to do: encrypt or decrypt?"
+program = gets.chomp
 
 #Ask them for the password:
 puts "What is the password you're using?"
-password = gets.chomp.downcase!
+password = gets.chomp
 
 #Conducts the requested operation, prints the results to the screen and exits:
-if program == "encryption"
-  puts encrypter_program(password)
-elsif program == "decryption"
-  puts decrypter_program(password)
+if program == "encrypt"
+  p encrypter_program(password)
+elsif program == "decrypt"
+  p decrypter_program(password)
 else
   puts "Whoa, there. I thought we hired agents who can type. Try again from the beginning. I ain't putting in another loop for you."
 end
