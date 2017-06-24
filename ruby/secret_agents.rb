@@ -5,6 +5,8 @@ encrypted = ""
   while index < password.length
     if password[index] == "z"
        encrypted += "a"
+    elsif password[index] == " "
+      encrypted += " "
     else
        password[index] = password[index].next!
        encrypted += password[index]
@@ -14,11 +16,10 @@ encrypted = ""
   p encrypted
 end
 
-
 puts encrypter_program("abc")
 puts encrypter_program("zed")
 puts encrypter_program("swordfish")
-
+puts encrypter_program("secret agent man")
 
 def decrypter_program(password)
   index = 0
@@ -28,6 +29,8 @@ def decrypter_program(password)
   while index < password.length
     if password[index] == "a"
       decrypted += "z"
+    elsif password[index] == " "
+      decrypted += " "
     else
        new_index = alphabet.index(password[index])
        new_index = new_index - 1
@@ -38,9 +41,14 @@ def decrypter_program(password)
   p decrypted
 end
 
-
+=begin
 puts decrypter_program("bcd")
 puts decrypter_program("afe")
 puts decrypter_program("txpsegjti")
+puts decrypter_program("tfdsfu bhfou nbo")
+
 
 p decrypter_program(encrypter_program("swordfish"))
+
+# This returns the original string because it first runs the encrypter, which changes each letter forward one position, and then it runs the decrypter, which changes each letter back one position.
+=end
