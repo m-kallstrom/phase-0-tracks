@@ -4,59 +4,47 @@
 # When there's more than one suspect who could have
 # committed the crime, add additional calls to prove it.
 
-# "iNvEsTiGaTiOn".<???>
+# .replace("new string") is the culprit because it's the only one that could have committed all these crimes.
+
+
+p "iNvEsTiGaTiOn".swapcase
 # => “InVeStIgAtIoN”
-iNvEsTiGaTiOn.capitalize
-iNvEsTiGaTiOn.swapcase
 
-# "zom".<???>
+p "zom".insert(2, 'o')
 # => “zoom”
-index doubleing
-# "enhance".<???>
+
+p "enhance".center(15, padstr=' ')
+p "enhance".rjust(11).ljust(15)
 # => "    enhance    "
-"enhance".center(4, padstr=' ')
-"enhance".rjust(4).ljust(4)
 
-# "Stop! You’re under arrest!".<???>
+p "Stop! You’re under arrest!".upcase
 # => "STOP! YOU’RE UNDER ARREST!"
-"Stop! You’re under arrest!".upcase
 
-# "the usual".<???>
+p "the usual" << " suspects"
+p "the usual".insert(-1, ' suspects')
 #=> "the usual suspects"
 
-"the usual".insert(-1, ' suspects')
-
-# " suspects".<???>
+p " suspects".prepend("the usual")
+p " suspects".insert(0, 'the usual')
 # => "the usual suspects"
-" suspects".prepend("the usual")
-" suspects".insert(0, 'the usual')
 
-# "The case of the disappearing last letter".<???>
+p "The case of the disappearing last letter".chomp("r")
+p "The case of the disappearing last letter".chop
 # => "The case of the disappearing last lette"
-"The case of the disappearing last letter".chomp
 
-# "The mystery of the missing first letter".<???>
+p "The mystery of the missing first letter".delete("T")
+p "The mystery of the missing first letter"[1..-1]
+p "The mystery of the missing first letter".slice(1..-1)
 # => "he mystery of the missing first letter"
 
-# "Elementary,    my   dear        Watson!".<???>
+p "Elementary,    my   dear        Watson!".squeeze(" ")
 # => "Elementary, my dear Watson!"
-"Elementary,    my   dear        Watson!".squeeze(" ")
 
-# "z".<???>
+p "z".each_byte {|c| print c, ' ' }
+p "z".ord
+p "z".gsub(/./) {|s| s.ord.to_s}
 # => 122
-# (What is the significance of the number 122 in relation to the character z?)
-each_byte {|fixnum| block } → str
-each_byte → an_enumerator
-Passes each byte in str to the given block, or returns an enumerator if no block is given.
 
-"hello".each_byte {|c| print c, ' ' }
-produces:
-
-104 101 108 108 111
-
-or codepoint
-or ord → integer
-
-
-# "How many times does the letter 'a' appear in this string?".<???>
+p "How many times does the letter 'a' appear in this string?".count("a")
 # => 4
+
