@@ -25,7 +25,7 @@ new_client[:children] = input.to_i
 
 puts "Describe the client's preferred decor theme:"
 input = gets.chomp
-new_client[:decor_theme] = input
+new_client[:decor] = input
 
 puts "Does the client realize their taste is horrible?"
 input = gets.chomp
@@ -34,27 +34,45 @@ if input == "yes" || input == "y"
 else
   input = false
 end
-new_client[:horrible_taste] = input
+new_client[:"Knows Their Taste is Horrible"] = input
 
-puts "Does the client realize that ombre is just an obnoxiously fancy word for 'dip-dying'?"
+puts "The client doesn't realize that ombre is just an obnoxiously fancy word for 'dip-dying':"
 input = gets.chomp
-if input == "yes" || input == "y"
+if input == "yes" || input == "true"
   input = true
 else
   input = false
 end
-new_client[:ombre_pretentious] = input
+new_client[:"Realizes the Word 'Ombre' is Pretentious"] = input
 
 #Print the data to the screen when questions are finished:
-puts "Name: #{name}"
-puts "Address: #{address}"
-puts "Number of Children: #{children}"
-puts "Preferred Decor Theme: #{decor_theme}"
-puts "Realize Own Taste is Horrible: #{horrible_taste}"
-puts "Realize Current Ombre Trend is Pretentious (Even If Pretty): #{ombre_pretentious}"
+
+new_client.each do |question, response|
+  puts "#{question.to_s.capitalize}: #{response}"
+end
+
+# puts "Name: #{name}"
+# puts "Address: #{address}"
+# puts "Number of Children: #{children}"
+# puts "Preferred Decor Theme: #{decor_theme}"
+# puts "Realize Own Taste is Horrible: #{horrible_taste}"
+# puts "Realize Current Ombre Trend is Pretentious (Even If Pretty): #{ombre_pretentious}"
 
   #Add labels so that keys remain hidden
 #Give prompt to update key:
+puts "Do you need to make a change?"
+input = gets.chomp
+break
+  input == "no" || input == "none"
+else
+  input == "yes" || input == "y"
+  puts "Which category needs to change?"
+  category = gets.chomp
+  puts "What is the new response?"
+  response = gets.chomp
+  new_client[:category.to_sym] = response
+end
+
   #If no updates, enters none and skips to end
   #-Take in key name and change to symbol
   #- Take in changed value
