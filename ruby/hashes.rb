@@ -8,19 +8,42 @@ new_client = {}
   #-Convert user data to proper type
   #-Assign to hash
 puts "Hello there! Could you give me the client's name?"
-
+input = gets.chomp
+new_client[:name] = input
 
 puts "What is the client's age?"
+input = gets.chomp
+new_client[:age] = input.to_i
 
 puts "What is the client's address?"
+input = gets.chomp
+new_client[:address] = input
 
 puts "How many children does the client have? (Pets that are treated as children should be counted.)"
+input = gets.chomp
+new_client[:children] = input.to_i
 
 puts "Describe the client's preferred decor theme:"
+input = gets.chomp
+new_client[:decor_theme] = input
 
 puts "Does the client realize their taste is horrible?"
+input = gets.chomp
+if input == "yes" || input == "y"
+  input = true
+else
+  input = false
+end
+new_client[:horrible_taste] = input
 
 puts "Does the client realize that ombre is just an obnoxiously fancy word for 'dip-dying'?"
+input = gets.chomp
+if input == "yes" || input == "y"
+  input = true
+else
+  input = false
+end
+new_client[:ombre_pretentious] = input
 
 #Print the data to the screen when questions are finished:
 puts "Name: #{name}"
