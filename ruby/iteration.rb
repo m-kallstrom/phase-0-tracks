@@ -67,31 +67,46 @@ drinks = {
 
 
 
- # Using delete_if to get rid of one of the values in the array that doesn't meet the condition
+ # Using delete_if to get rid of values in the array that don't meet the condition
  birthday_party_supplies.delete_if { |supply| supply.length < 5}
    puts birthday_party_supplies
+   puts birthday_party_supplies.length
 
-## Using delete_if to get rid of one of the values in the has that doesn't meet the condition
+## Using delete_if to get rid of values in the hash that don't meet the condition
  drinks.delete_if { |beverage, type| type.length < 5}
    puts drinks
+   puts drinks.length
 
 ## Keeps only items in the array that meet the condition:
- birthday_party_supplies.keep_if { |supply| supply.length > 10}
+ birthday_party_supplies.keep_if { |supply| supply.length > 8}
   puts birthday_party_supplies
+  puts birthday_party_supplies.length
 
 ##Keeps items in the hash only if they meet the condition:
  drinks.keep_if { |beverage, type| type.length > 7}
    puts drinks
+  puts drinks.length
+
 
 ## Filter out any items in the array that don't meet a certain condition:
 birthday_party_supplies.reject! { |supply| supply.length < 12}
   puts birthday_party_supplies
+  puts birthday_party_supplies.length
+
 
 ## Filter out any items in the hash that don't meet a certain condition:
 drinks.reject! { |beverage, type| type.length < 9}
   puts drinks
+  puts drinks.length
+
 
 ##Remove items from array until the condition in the block becomes false:
 birthday_party_supplies.select! { |supply| supply.length >= 16}
+puts birthday_party_supplies
+puts birthday_party_supplies.length
+
 
 ##Remove items from a hash until the condition in the block becomes false:
+drinks.select! { |beverage, type| type.length > 9}
+  puts drinks
+  puts drinks.length
