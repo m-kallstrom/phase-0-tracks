@@ -1,13 +1,17 @@
 #Declarations
 new_client = {}
 
+#Method to make key/value pairs and to sort values into boolean, integer and string input. Also handles addresses, which would otherwise come out as integers, and 0 input for children/pets which would otherwise come out as a string.
+
 def key_maker(hash, key, value)
   case
-  when value.include?("yes")
+  when value.include?("true")
     value = true
-  when value.include?("no")
+  when value.include?("false")
     value = false
-  when value.to_i > 0
+  when value.to_i > 0 && value.length < 4
+    value = value.to_i
+  when value == "0"
     value = value.to_i
   else
     value
@@ -40,12 +44,14 @@ puts "Describe the client's preferred decor theme:"
 input = gets.chomp
 key_maker(new_client, "decor", input)
 
-puts "Does the client realize their taste is horrible?"
+puts "True or False: the client realizes their taste is horrible."
 input = gets.chomp
+input = input.downcase
 key_maker(new_client, "Taste is horrible", input)
 
-puts "Does the client seem to realize that ombre is just an obnoxiously fancy word for 'dip-dying'?"
+puts "True or False: the client seems to understand that ombre is just an obnoxiously fancy word for 'dip-dying'."
 input = gets.chomp
+input = input.downcase
 key_maker(new_client, "Realize ombre sounds pretentious", input)
 
 #Print the data to the screen when questions are finished:
@@ -58,10 +64,12 @@ end
 puts "Do you need to make a change?"
 input = gets.chomp
 
-#If no updates, enters none and skips to end
-  #-Take in key name and changed value, then
-  #run the key_maker method
+#If no updates, enters none/no and skips to end
 if input == "no" || input == "done"
+  puts "Thank you for getting us a new client! Do not show them this form."
+
+  #Otherwise:
+  #-Take in key name and changed value, then run the key_maker method
 else
   puts "Which category do you need to change?"
   category = gets.chomp
