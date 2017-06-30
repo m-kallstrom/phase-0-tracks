@@ -59,6 +59,35 @@ fib(100).each do | number |
   end
 end
 
+#BUBBLE SORT!
+
+#Loop through array
+
+  #Identify if current element is greater than previous element
+    #If true, swap those two elements
+    #Otherwise move on to the next set and perform same if logic
+
+def bubble_sort(array)
+  n = array.length
+  loop do
+    swapped = false
+
+    (n-1).times do |i|
+      if array[i] > array[i+1]
+        array[i], array[i+1] = array[i+1], array[i]
+        swapped = true
+        p array
+      end
+
+    end
+    break if not swapped
+  end
+
+end
+
+puts array1 = [12, 41, 2, 5, 8, 12, 5768, 123, 5, 7567, ]
+puts bubble_sort(array1)
+
 
 
 
