@@ -1,10 +1,9 @@
 
 #SEARCH ARRAY
 #Iterate through the array
-  #Check to see if the current iterations matches the integer parameter to search for
-
-  #If there is a match, print the index value of it's location in the array
-  #Otherwise, return nil
+  #Check to see if the current iteration matches the integer parameter to search for
+    #If there is a match, print the index value of its location in the array
+    #Otherwise, return nil
 
 array = [42, 89, 23, 1]
 
