@@ -9,7 +9,6 @@ star_wars_saga = {
         "Princess Leia Organa",
         ],
       release_year: 1977,
-
       },
 
     The_Empire_Strikes_Back: {
@@ -106,13 +105,13 @@ star_wars_saga = {
       release_year: 2016,
       },
 
-      Untitled_Han_Solo_Film: {
-        time_period: "between Episodes 3 and 4 but probably before Rogue One and Star Wars: Rebels",
-        main_characters: ["tbd"],
-        release_year: "tbd",
-      }
-
+    Untitled_Han_Solo_Film: {
+      time_period: "between Episodes 3 and 4 but probably before Rogue One and Star Wars: Rebels",
+      main_characters: ["tbd"],
+      release_year: "tbd",
+    }
   },
+
   cartoons_and_misc: {
     Star_Wars_Clone_Wars: {
       time_period: "between Episodes 2 and 3",
@@ -143,7 +142,11 @@ star_wars_saga = {
     },
 }
 
-
+p star_wars_saga[:original_trilogy]
+p star_wars_saga[:prequel_trilogy][:Attack_of_the_Clones]
+p star_wars_saga[:one_shots][:Rogue_One][:time_period]
+p star_wars_saga[:sequel_trilogy][:The_Force_Awakens][:main_characters][0]
+p star_wars_saga[:cartoons_and_misc][:Star_Wars_Clone_Wars][:main_characters][3][0]
 
 # In phase-0-tracks/ruby/nested_data_structures.rb, design and build a nested data structure to represent a real-world construct. You can choose the construct: Is it a highway full of cars full of people? A classroom full of desks full of supplies? A fashion show with multiple runways featuring multiple models? Build something that will use a mix of hashes and arrays.
 
