@@ -1,12 +1,4 @@
-#METHODS
-
-def alias_maker(agent_name)
-  agent_name.split(' ')
-
-end
-
-p alias_maker("Felicia Torres")
-
+#METHOD
 
 #Take in string of first and last name
 #Split string into an array of two values using the space as a divider
@@ -17,6 +9,41 @@ p alias_maker("Felicia Torres")
   #-LOL if y then do at random
 #Put the letters back together
 #Put the first and last name back together in the opposite order they started in.
+
+def alias_maker(agent_name)
+  vowels = ("aeiou")
+  consonants = ("bcdfghjklmnpqrstvwxz")
+  name_array = agent_name.downcase.split(' ')
+  first_name_array = name_array[0].split('')
+  first_name_array.map! do |letter|
+     if vowels.include?(letter)
+        new_index = vowels.index(letter) + 1
+        letter = vowels[new_index]
+    elsif letter.include?("y")
+       letter = ["z", "a", "a"].sample
+    elsif consonants.include?(letter)
+        new_index = consonants.index(letter) + 1
+        letter = consonants[new_index]
+    end
+  end
+  last_name_array = name_array[1].split('')
+  last_name_array.map! do |letter|
+    if vowels.include?(letter)
+        new_index = vowels.index(letter) + 1
+        letter = vowels[new_index]
+    elsif letter.include?("y")
+      letter = ["z", "a", "a"].sample
+    elsif consonants.include?(letter)
+        new_index = consonants.index(letter) + 1
+        letter = consonants[new_index]
+    end
+  end
+  last_name = last_name_array.join('')
+  first_name = first_name_array.join('')
+  spy_alias = last_name.capitalize! + " " + first_name.capitalize!
+end
+
+p alias_maker("Felicya Torrys")
 
 =begin
 Swapping the first and last name.
