@@ -44,7 +44,9 @@ end
 #DRIVER CODE
 #Ask the user for a name and return an alias
 #Loop until the user types done
+
 puts "Greetings, Agent!"
+decryption_list = {}
 done = false
 until done
 puts "Please enter a name for processing:"
@@ -52,11 +54,32 @@ input = gets.chomp
   if input == "done"
     done = true
   else
-    puts alias_maker(input)
+    new_alias = alias_maker(input)
+    decryption_list.store(input.to_sym, new_alias)
     done = false
   end
 end
 
+#Print out a list of agent names and their corresponding aliases:
+puts "Decryption List: DO NOT SHOW TO ANYONE"
+decryption_list.each do |real, fake|
+  p "#{real}: #{fake}"
+end
+
+#For fun:
+puts "This list will self-destruct in 5..."
+sleep(1)
+puts "4..."
+sleep(1)
+puts "3..."
+sleep(1)
+puts "You're wearing flame retardant clothing, right?"
+sleep(1)
+puts "1..."
+sleep(1)
+
+#QUESTION:
+#Which is better, the following original code below or the refactored code at the top? The refactored one is shorter, and I think more efficient, but I can't get it to change the letters of the array in place. Instead, I had to assign each changed letter into the spy_alias variable and then split that to get it to capitalize properly.
 
 =begin
 #Refactored this code:
