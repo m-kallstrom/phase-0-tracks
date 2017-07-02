@@ -11,6 +11,56 @@
 #Put the first and last name back together in the opposite order they started in.
 
 def alias_maker(agent_name)
+  spy_alias = ""
+  vowels = "aeiou"
+  consonants = "bcdfghjklmnpqrstvwxz"
+  name_array = agent_name.downcase.split(' ')
+  name_array.reverse!
+  2.times do |i|
+    name = name_array[i].split('')
+    name.each do |letter|
+     if vowels.include?(letter)
+        new_index = vowels.index(letter) + 1
+        letter = vowels[new_index]
+        spy_alias += letter
+    elsif letter.include?("y")
+       letter = ["z", "a", "a"].sample
+       spy_alias += letter
+    elsif consonants.include?(letter)
+        new_index = consonants.index(letter) + 1
+        letter = consonants[new_index]
+        spy_alias += letter
+    end
+  end
+  spy_alias += " "
+ end
+ spy = spy_alias.split(' ')
+ spy[0].capitalize + " " + spy[1].capitalize
+end
+
+#p alias_maker("Felicia Torres")
+#p alias_maker("James Bond")
+
+#DRIVER CODE
+#Ask the user for a name and return an alias
+#Loop until the user types done
+puts "Greetings, Agent!"
+done = false
+until done
+puts "Please enter a name for processing:"
+input = gets.chomp
+  if input == "done"
+    done = true
+  else
+    puts alias_maker(input)
+    done = false
+  end
+end
+
+
+=begin
+#Refactored this code:
+def alias_maker(agent_name)
   vowels = ("aeiou")
   consonants = ("bcdfghjklmnpqrstvwxz")
   name_array = agent_name.downcase.split(' ')
@@ -44,20 +94,4 @@ def alias_maker(agent_name)
 end
 
 p alias_maker("Felicya Torrys")
-
-=begin
-Swapping the first and last name.
-Changing all of the vowels (a, e, i, o, or u) to the next vowel in 'aeiou', and all of the consonants (everything else besides the vowels) to the next consonant in the alphabet. So 'a' would become 'e', 'u' would become 'a', and 'd' would become 'f'.
-
-If you get really and truly stuck, just write an alias method that loops through the original name and changes the letters somehow, without worrying about implementing this particular algorithm. It's really not worth stressing about. Simply attempting the algorithm will help you improve, even if you didn't quite get there.
-
-This is the most complex algorithm you've had to write, and the toughest release of this challenge. How will you break it down into manageable pieces? Try to identify all of the mini-challenges and considerations that show up in your algorithm, such as
-
-When will it be helpful to convert the string to an array to work with it more easily?
-How will you figure out whether a letter is a vowel?
-How will you deal with the fact that some letters are uppercase?
-How will you handle edge cases?
-You may find it helpful to write additional methods -- one for each job -- and then combine them. It's less overwhelming, for instance, to start converting your algorithm to code by writing a next_vowel method that takes a vowel character and returns the next vowel character. Once you know that small piece works because you've tested it with a few different vowels, you can use it in your program and trust that it's unlikely to be the source of any bugs that come up. This is a great way to make steady progress.
-
-If you do successfully implement the algorithm, "Felicia Torres" will become "Vussit Gimodoe", which is a rather odd name. Luckily, our dearest Vussit is from a country no one has ever heard of, mainly because it doesn't really exist.
 =end
