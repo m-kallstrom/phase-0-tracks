@@ -1,3 +1,5 @@
+
+=begin
 CHARACTERISTICS ----------------
 Ear floppiness: varies
 Friendly: yes
@@ -13,3 +15,4 @@ Play with toys
 Sleep
 Eat shoes but in a cute way
 Pee on floor and look cutely guilty
+=end 
