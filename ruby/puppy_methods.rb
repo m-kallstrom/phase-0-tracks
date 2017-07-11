@@ -1,5 +1,9 @@
 class Puppy
 
+  def initialize
+    puts "Initializing new puppy instance..."
+  end
+
   def speak(number)
     number.times {puts "Woof!"}
   end
@@ -22,8 +26,6 @@ class Puppy
     sleep 5
     puts "No, I'm not. Give me a biscuit!"
   end
-
-
 end
 
 #DRIVER CODE
