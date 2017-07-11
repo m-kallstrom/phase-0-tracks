@@ -17,6 +17,19 @@ class Santa
     puts "That was a good #{cookie_type}!"
   end
 
+  def celebrate_birthday
+    @age += 1
+  end
+
+  def get_mad_at(reindeer_name)
+   #index_number = @reindeer_ranking.index(reindeer_name)
+   @reindeer_ranking.index(reindeer_name) = @reindeer_ranking[-1]
+  end
+
+  def gender=(new_gender)
+    @gender= new_gender
+  end
+
   def about
     puts "#{@gender}"
     puts "#{@ethnicity}"
@@ -28,11 +41,12 @@ end
 
 #DRIVER CODE
 #Initialize a new instance of Santa and check its methods are working properly
-# jim = Santa.new("amorphous blob", "cinnamon roll")
-# jim.speak
-# jim.eat_milk_and_cookies("Chocolate Chip Cookie")
-# jim.about
-
+jim = Santa.new("amorphous blob", "cinnamon roll")
+jim.speak
+jim.eat_milk_and_cookies("Chocolate Chip Cookie")
+jim.about
+jim.get_mad_at("Rudolph")
+=begin
 
 example_genders = ["agender", "transmale", "bigender", "male", "female", "transfemale", "gender fluid", "N/A"]
 example_ethnicities = ["black", "Latinx", "white", "Japanese-African", "prefer not to say", "Mystical Creature (unicorn)", "N/A", "Demi-God", "Mystical Creature (Vampire)"]
@@ -48,3 +62,4 @@ santas.each do |id, value|
  puts "Santa #{id+1} is:"
  value.about
 end
+=end
