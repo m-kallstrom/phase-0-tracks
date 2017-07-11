@@ -21,20 +21,32 @@ class Santa
     @age += 1
   end
 
-  def get_mad_at(reindeer_name)
-   #index_number = @reindeer_ranking.index(reindeer_name)
-   @reindeer_ranking.index(reindeer_name) = @reindeer_ranking[-1]
-  end
-
-  def gender=(new_gender)
-    @gender= new_gender
-  end
-
   def about
     puts "#{@gender}"
     puts "#{@ethnicity}"
     puts "prefers reindeer in the following order: #{@reindeer_ranking.shuffle}"
     puts "#{@age} years old"
+  end
+
+  def get_mad_at(reindeer_name)
+   #index_number = @reindeer_ranking.index(reindeer_name)
+   @reindeer_ranking.insert(-1, @reindeer_ranking.delete_at(@reindeer_ranking.index(reindeer_name)))
+  end
+
+  def age
+    @age
+  end
+
+  def ethnicity
+    @ethnicity
+  end
+
+  def gender
+    @gender
+  end
+
+  def gender=(new_gender)
+    @gender= new_gender
   end
 end
 
@@ -45,7 +57,11 @@ jim = Santa.new("amorphous blob", "cinnamon roll")
 jim.speak
 jim.eat_milk_and_cookies("Chocolate Chip Cookie")
 jim.about
-jim.get_mad_at("Rudolph")
+p jim.get_mad_at("Rudolph")
+p jim.ethnicity
+p jim.age
+gender = "man-bun"
+p gender
 =begin
 
 example_genders = ["agender", "transmale", "bigender", "male", "female", "transfemale", "gender fluid", "N/A"]
