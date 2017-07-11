@@ -1,6 +1,9 @@
 #METHODS
 
 class Santa
+  attr_reader :ethnicity, :age
+  attr_accessor :gender
+
   def initialize(gender, ethnicity)
     puts "Initializing Santa instance..."
     @gender = gender
@@ -32,22 +35,6 @@ class Santa
    #index_number = @reindeer_ranking.index(reindeer_name)
    @reindeer_ranking.insert(-1, @reindeer_ranking.delete_at(@reindeer_ranking.index(reindeer_name)))
   end
-
-  def age
-    @age
-  end
-
-  def ethnicity
-    @ethnicity
-  end
-
-  def gender
-    @gender
-  end
-
-  def gender=(new_gender)
-    @gender= new_gender
-  end
 end
 
 
@@ -59,6 +46,8 @@ jim.eat_milk_and_cookies("Chocolate Chip Cookie")
 jim.about
 p jim.get_mad_at("Rudolph")
 p jim.ethnicity
+p jim.age
+jim.celebrate_birthday
 p jim.age
 gender = "man-bun"
 p gender
