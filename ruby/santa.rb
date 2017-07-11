@@ -22,7 +22,8 @@ class Santa
     puts "Ho, ho, ho! Haaaaaaaappy Holidays!"
   end
 
-  #returns a message about eating cookies. I assume they're being dunked into the milk and then eaten cause you don't eat milk
+  #returns a message about eating cookies.
+  #(I assume they're being dunked into the milk and then eaten cause you don't eat milk.)
   def eat_milk_and_cookies(cookie_type)
     puts "That was a good #{cookie_type}!"
   end
@@ -40,7 +41,7 @@ end
 
 
 #DRIVER CODE
-#Initialize a new instance of Santa and check its methods are working properly
+#initialize a new instance of Santa and check its methods are working properly
 
 =begin
 jim = Santa.new("amorphous blob", "cinnamon roll")
