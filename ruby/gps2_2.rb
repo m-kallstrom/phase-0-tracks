@@ -70,6 +70,15 @@ p update_item_quantity(our_list, "Ice Cream", 1)
 p our_list
 
 # Method to print a list and make it look pretty
-# input:
+# input: the hash
 # steps:
-# output:
+  #print out each key and value with prettiness
+# output: awesomeness
+
+def beautify_hash(hash)
+  hash.each do |item, quantity|
+    puts "#{item.capitalize}: #{quantity}"
+  end
+end
+
+beautify_hash(our_list)
