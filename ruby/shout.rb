@@ -40,4 +40,13 @@ p "NEW CODING BUDDY used NERDY REFERENCE"
 p new_coding_buddy.yell_angrily("I can't believe Senses8 just got canceled")
 p "It's super effective!"
 
+#Old version for standalone module:
+# module Shout
+#   def self.yell_angrily(words)
+#     words + "!!!" + " >:("
+#   end
 
+#   def self.yell_happily(words)
+#     words + "!!!" + " :D!"
+#   end
+# end
