@@ -5,11 +5,11 @@
 
 module Shout
   def yell_angrily(words)
-    words + "!!!" + " :("
+    words + "!!!" + " >:("
   end
 
   def yell_happily(words)
-    words + "!!!" + ":D!"
+    words + "!!!" + " :D!"
   end
 end
 
@@ -24,15 +24,20 @@ class Friend
 end
 
 #Initialize some new instances and give them something to say
-speech = "OMG"
+sound = "OMG"
 aggressive_hobo = Jerk.new
 new_coding_buddy = Friend.new
 
 #test it works
-p aggressive_hobo.yell_angrily(speech)
-p aggressive_hobo.yell_happily(speech)
-
-p new_coding_buddy.yell_happily(speech)
-p new_coding_buddy.yell_angrily(speech)
+p "A wild AGGRESSIVE HOBO appeared!"
+p aggressive_hobo.yell_angrily(sound)
+p "AGGRESSIVE HOBO used ROAR"
+p aggressive_hobo.yell_happily("Imma take over this whole subway bench, and then the world")
+p "It's not very effective..."
+p "A wild NEW CODING BUDDY appeared!"
+p new_coding_buddy.yell_happily(sound)
+p "NEW CODING BUDDY used NERDY REFERENCE"
+p new_coding_buddy.yell_angrily("I can't believe Senses8 just got canceled")
+p "It's super effective!"
 
 
