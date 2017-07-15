@@ -1,9 +1,3 @@
-class Bird
-end
-
-class Plane
-end
-
 
 module Flight
   def take_off(altitude)
