@@ -11,6 +11,10 @@ attr_accessor :hidden_array
     @hidden_array = []
   end
 
+  def hide_letters
+    @word_array.length.times { @hidden_array << " _ "}
+    @hidden_array
+  end
 
   def check_letter(letter_guessed)
     if @word_array.include?(letter_guessed)
