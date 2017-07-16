@@ -50,4 +50,15 @@ describe Wordgame do
   it "determines which message to give the user PASS" do
     expect(hangman.taunter).to eq "Awesome job! I knew you could do it!"
   end
+
+  it "check all methods call each other properly to the final result" do
+    hangman.hide_letters
+    hangman.check_letter("a")
+    hangman.check_letter("z")
+    hangman.check_letter("p")
+    hangman.check_letter("l")
+    hangman.check_letter("a")
+    hangman.check_letter("e")
+    expect(hangman.game_over?).to eq "Awesome job! I knew you could do it!"
+  end
 end
