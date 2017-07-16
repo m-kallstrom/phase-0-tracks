@@ -1,8 +1,7 @@
 #Solo Challenge
 
 class Wordgame
-attr_reader :letters_checked
-attr_accessor :hidden_array
+  attr_reader(:letters_checked, :guess_count)
 
   def initialize(word_to_be_guessed)
     @word_array = word_to_be_guessed.split("")
@@ -12,7 +11,7 @@ attr_accessor :hidden_array
   end
 
   def hide_letters
-    @word_array.length.times { @hidden_array << " _ "}
+    @word_array.length.times { @hidden_array << " _ " }
     @hidden_array
   end
 
@@ -25,17 +24,46 @@ attr_accessor :hidden_array
   end
 
   def letter_reveal(letter_guessed)
-    @letter_index = @word_array.index(letter_guessed)
-    @hidden_array[@letter_index] = letter_guessed
+    @index = 0
+    @word_array.each do |letter|
+      if letter == letter_guessed
+        @hidden_array[@index] = letter
+      end
+      @index +=1
+    end
     @hidden_array
   end
 
+  def guess_counter
+   case
+    when @word_array.length >=20 then guess_count = 10
+    when @word_array.length >3 && @word_array.length <20 then guess_count = 11
+    when @word_array.length <= 3 then guess_count = 12
+    end
+   return guess_count
+  end
+
+  def game_over?
+    if @letters_checked == @guess_count
+      taunter
+    end
+  end
+
+  def taunter
+    if @hidden_array.include?(" _ ")
+      p "You get NOTHING! You LOSE! GOOD DAY, SIR!"
+    else
+      p "Awesome job!"
+    end
+  end
+
+
   def update_counter(letter_guessed)
     if @letters_checked.include?(letter_guessed)
-      @guess_count
+      @letter_checked.length
     else
       @letters_checked << letter_guessed
-      @guess_count += 1
+      @letters_checked.length
     end
   end
 end
