@@ -24,6 +24,12 @@ attr_accessor :hidden_array
     end
   end
 
+  def letter_reveal(letter_guessed)
+    @letter_index = @word_array.index(letter_guessed)
+    @hidden_array[@letter_index] = letter_guessed
+    @hidden_array
+  end
+
 
 end
 
