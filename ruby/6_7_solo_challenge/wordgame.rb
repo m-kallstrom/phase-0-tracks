@@ -32,10 +32,23 @@ class Wordgame
   end
 
   #Take the word array and make an array of " _ " of the same number of characters
+  #IF there is a space, restore the space to the array
   #output the obscured array
-  def hide_letters
+    def hide_letters
+    if @word_array.include?(" ")
+      @index = 0
+      @word_array.length.times { @hidden_array << " _ " }
+      @word_array.each do |letter|
+        if letter == " "
+          @hidden_array[@index] = " "
+        end
+        @index += 1
+      end
+      array_beautifier
+    else
     @word_array.length.times { @hidden_array << " _ " }
-    @hidden_array
+    array_beautifier
+    end
   end
 
   #Check the letter the user enters
