@@ -30,7 +30,14 @@ attr_accessor :hidden_array
     @hidden_array
   end
 
-
+  def update_counter(letter_guessed)
+    if @letters_checked.include?(letter_guessed)
+      @guess_count
+    else
+      @letters_checked << letter_guessed
+      @guess_count += 1
+    end
+  end
 end
 
 hangman = Wordgame.new("apple")
