@@ -1,13 +1,21 @@
 #Solo Challenge
 
 class Wordgame
-  attr_reader(:letters_checked, :guess_count)
 
   def initialize(word_to_be_guessed)
     @word_array = word_to_be_guessed.split("")
     @guess_count = 0
     @letters_checked = []
     @hidden_array = []
+  end
+
+  def guess_counter
+   case
+    when @word_array.length >=20 then @guess_count = 10
+    when @word_array.length >3 && @word_array.length <20 then @guess_count = 11
+    when @word_array.length <= 3 then @guess_count = 12
+    end
+   return @guess_count
   end
 
   def hide_letters
@@ -17,9 +25,14 @@ class Wordgame
 
   def check_letter(letter_guessed)
     if @word_array.include?(letter_guessed)
-      guess = true
+      puts "Yep! We've got some of that!"
+      letter_reveal(letter_guessed)
+      update_counter(letter_guessed)
+      p @hidden_array
     else
-      guess = false
+      puts "Nope! Sorry!"
+      update_counter(letter_guessed)
+      p @hidden_array
     end
   end
 
@@ -34,19 +47,27 @@ class Wordgame
     @hidden_array
   end
 
-  def guess_counter
-   case
-    when @word_array.length >=20 then guess_count = 10
-    when @word_array.length >3 && @word_array.length <20 then guess_count = 11
-    when @word_array.length <= 3 then guess_count = 12
+  def update_counter(letter_guessed)
+    if @letters_checked.include?(letter_guessed)
+      @letters_checked.length
+    else
+      @letters_checked << letter_guessed
+      @letters_checked.length
     end
-   return guess_count
   end
 
   def game_over?
-    if @letters_checked == @guess_count
-      taunter
-    end
+   if @word_array != @hidden_array
+     if @letters_checked.length == @guess_count
+       @game_over = true
+       taunter
+     else
+       @game_over = false
+     end
+   else
+
+     taunter
+   end
   end
 
   def taunter
@@ -56,24 +77,28 @@ class Wordgame
       p "Awesome job!"
     end
   end
-
-
-  def update_counter(letter_guessed)
-    if @letters_checked.include?(letter_guessed)
-      @letter_checked.length
-    else
-      @letters_checked << letter_guessed
-      @letters_checked.length
-    end
-  end
 end
 
 hangman = Wordgame.new("apple")
 
+#DRIVER CODE
+=begin
+puts "Hey! Wanna play hangman? But without hanging a man? Even a digital one? This version is Conscience Lite!"
+puts "Enter a word for your partner to guess!"
+input = gets.chomp
+hangman = Wordgame.new(input)
+hangman.guess_counter
+hangman.word_input_hider
+p hangman.hide_letters
 
-#Declare a game class
-#reader access: word to be guessed, letter being guessed,
-#reader/writer access: guess count, word being revealed?
+puts "Okay! Don't look above. Guess a letter!"
+while !hangman.game_over?
+  input = gets.chomp
+  hangman.check_letter(input)
+  hangman.game_over?
+end
+=end
+
 
 #initialize and get a word from the user
 

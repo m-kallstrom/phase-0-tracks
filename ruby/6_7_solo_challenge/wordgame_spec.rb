@@ -10,11 +10,13 @@ describe Wordgame do
   end
 
   it "checks the word for the letter being guessed POSTIVE RESULT" do
-    expect(hangman.check_letter("a")).to eq true
+    hangman.hide_letters
+    expect(hangman.check_letter("a")).to eq ["a", " _ ", " _ ", " _ ", " _ "]
   end
 
   it "checks the word for the letter being guessed NEGATIVE RESULT" do
-    expect(hangman.check_letter("z")).to eq false
+    hangman.hide_letters
+    expect(hangman.check_letter("z")).to eq [" _ ", " _ ", " _ ", " _ ", " _ "]
   end
 
   it "obscures the array of letters" do
