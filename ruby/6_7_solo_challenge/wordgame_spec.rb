@@ -11,21 +11,21 @@ describe Wordgame do
 
   it "checks the word for the letter being guessed POSTIVE RESULT" do
     hangman.hide_letters
-    expect(hangman.check_letter("a")).to eq ["a", " _ ", " _ ", " _ ", " _ "]
+    expect(hangman.check_letter("a")).to eq "a _  _  _  _ "
   end
 
   it "checks the word for the letter being guessed NEGATIVE RESULT" do
     hangman.hide_letters
-    expect(hangman.check_letter("z")).to eq [" _ ", " _ ", " _ ", " _ ", " _ "]
+    expect(hangman.check_letter("z")).to eq " _  _  _  _  _ "
   end
 
   it "obscures the array of letters" do
-    expect(hangman.hide_letters).to eq [" _ ", " _ ", " _ ", " _ ", " _ "]
+    expect(hangman.hide_letters).to eq " _  _  _  _  _ "
   end
 
   it "reveals the letter if correct" do
     hangman.hide_letters
-    expect(hangman.letter_reveal("a")).to eq ["a", " _ ", " _ ", " _ ", " _ "]
+    expect(hangman.letter_reveal("a")).to eq "a _  _  _  _ "
   end
 
  it "updates the guess counter when an item is NOT included" do

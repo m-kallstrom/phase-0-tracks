@@ -61,11 +61,13 @@ class Wordgame
     if @word_array.include?(letter_guessed)
       puts "Yep! We've got some of that!"
       letter_reveal(letter_guessed)
+      update_counter(letter_guessed)
+      array_beautifier
     else
       puts "Nope! Sorry!"
+      update_counter(letter_guessed)
+      array_beautifier
     end
-    update_counter(letter_guessed)
-    p @hidden_array
   end
 
   #Change the hidden_array to reveal guessed letter
@@ -80,7 +82,14 @@ class Wordgame
       end
       @index +=1
     end
-    @hidden_array
+    array_beautifier
+  end
+
+  #Print out a nice string for the hidden_array
+  def array_beautifier
+    @pretty_string = ""
+    @hidden_array.each { |character| @pretty_string += character }
+    p @pretty_string
   end
 
   #Update the unique guess counter
