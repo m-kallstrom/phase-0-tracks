@@ -4,6 +4,23 @@ class Wordgame
 attr_reader :letters_checked
 attr_accessor :hidden_array
 
+  def initialize(word_to_be_guessed)
+    @word_array = word_to_be_guessed.split("")
+    @guess_count = 0
+    @letters_checked = []
+    @hidden_array = []
+  end
+
+
+  def check_letter(letter_guessed)
+    if @word_array.include?(letter_guessed)
+      guess = true
+    else
+      guess = false
+    end
+  end
+
+
 end
 
 hangman = Wordgame.new("apple")
