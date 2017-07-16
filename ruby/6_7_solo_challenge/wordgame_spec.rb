@@ -48,6 +48,6 @@ describe Wordgame do
   end
 
   it "determines which message to give the user PASS" do
-    expect(hangman.taunter).to eq "Awesome job!"
+    expect(hangman.taunter).to eq "Awesome job! I knew you could do it!"
   end
 end
