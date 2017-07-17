@@ -89,7 +89,7 @@ class Wordgame
   def array_beautifier
     @pretty_string = ""
     @hidden_array.each { |character| @pretty_string += character }
-    p @pretty_string
+    @pretty_string
   end
 
   #Update the unique guess counter
