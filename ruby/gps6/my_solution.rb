@@ -90,3 +90,27 @@ end
 
 #=======================================================================
 # Reflection Section
+
+#What are the differences between the two different hash syntaxes shown in the state_data file?
+
+#--One uses the hash rocket to make key/value pairs and the more nested one uses symbols.
+
+
+#What does require_relative do? How is it different from require?
+
+#--Require_relative links the current document with another document in the same folder. If it had been 'require', then the path to that document would have to be specified rather than just the file name.
+
+
+#What are some ways to iterate through a hash?
+
+#--You can use .each to iterate through a hash, using the keys and values to reach into the nested hash. You could also use .map or some other built in method depending on what your needs were.
+
+
+#When refactoring virus_effects, what stood out to you about the variables, if anything?
+
+#--It seemed odd to need them repeated so often, but then we eventually realized that the parameter variables weren't even being used in the methods--it was all instance variables.
+
+
+#What concept did you most solidify in this challenge?
+
+#--This was good practice for thinking out loud through different solutions. This helped solidify accessing nested hashes. I also learned about refactoring for greater human readability rather than just decreasing the number of lines in a program.
