@@ -4,12 +4,12 @@
   //set variable i to the length of string minus one
   //count down from i until it reaches 0
   // stuff each letter at index i into the newString variable
-// print the variable to the console
+//print the variable to the console
 
 
 function reverseString(string) {
   var newString = ' ';
-  for (var i = string.length -1; i >= 0; i-=1) {
+  for (var i = string.length -1; i >= 0; i--) {
     newString += (string[i]);
   }
   return newString;
@@ -19,13 +19,13 @@ function reverseString(string) {
 
 var reverseStringFunctionWorks = true;
 var missesRuby = true;
-var ruby = reverseString("Baby, come back! You can blame it all on me!");
+var ruby = reverseString("Baby, come back! You can blame it all. on. me!");
 var javaScript = reverseString("Imma make some sweet JavaScript games!");
 
 // DRIVER CODE
 
 //declare some true variables
-//IF both conditions are true, print the reverse string
+//IF both conditions are true, print a reverse string
   // ELSE IF print a different reverse string
   // ELSE cry
 
