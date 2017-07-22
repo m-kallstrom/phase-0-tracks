@@ -6,6 +6,19 @@
   //continue until every string has been compared against the changing variable
 //output the variable
 
+function returnLongestString(array) {
+  var longestString = "";
+    for (var i = 0; i < array.length; i++)
+      if (longestString.length < array[i].length) {
+        longestString = array[i];
+      }
+  return longestString;
+}
+
+returnLongestString(["here", "there", "everywhere", "to me"]);
+// => "everywhere"
+returnLongestString(["How does a bastard", "orphan", "son of a whore", "And a Scotsman", "dropped in the middle", "of a forgotten spot", "in the Caribbean", "by providence impoverished",  "In squalor", "grow up to be a hero and a scholar?"])
+// => "grow up to be a hero and a scholar?"
 
 
 /*Add a file called algos.js to the phase-0-tracks/js folder.
