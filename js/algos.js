@@ -1,3 +1,5 @@
+//METHOD DECLARATIONS
+
 // take in an array of strings
 // set a "longest string" variable to nothing
 //FOR each string in the array
@@ -15,11 +17,35 @@ function returnLongestString(array) {
   return longestString;
 }
 
-returnLongestString(["here", "there", "everywhere", "to me"]);
+
+//Take in two objects (but they're not hashes? what?) as arguments
+  //FOR each object in the first...object. Um.
+    //compare the first key of parameter 1 to each key of parameter 2
+      //IF there is a match,
+        //compare the values
+          //IF those values match
+            //break the cycle and return true
+      // ELSE keep looking through until it has checked all parameters of object 1 against all parameters against object 2
+        //in which case, it returns false
+
+
+
+//DRIVER CODE
+
+//test function to return longest string in an array
+returnLongestString(["here", "there", "everywhere"]);
 // => "everywhere"
+returnLongestString(["long phrase","longest phrase","longer phrase"])
+// => "longest phrase"
 returnLongestString(["How does a bastard", "orphan", "son of a whore", "And a Scotsman", "dropped in the middle", "of a forgotten spot", "in the Caribbean", "by providence impoverished",  "In squalor", "grow up to be a hero and a scholar?"])
 // => "grow up to be a hero and a scholar?"
 
+
+//test function that examines arrays and returns true if they share at least one key/value pair
+yourFunction({name: "Steven", age: 54}, {name: "Tamir", age: 54});
+// =>true
+yourFunction({animal: "Dog", legs: 4}, {animal: "Dog", legs: 3});
+// =>true
 
 /*Add a file called algos.js to the phase-0-tracks/js folder.
 In algos.js, write a function that takes an array of words or phrases and returns the longest word or phrase in the array. So if we gave your function the array of ["long phrase","longest phrase","longer phrase"], it would return "longest phrase". This is a logical reasoning challenge, so try to reason through this based on what you already know, rather than Googling the fanciest solution or looking up built-in sorting functions. Note that "some string".length will do what you expect in JS.
