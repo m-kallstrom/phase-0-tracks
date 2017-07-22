@@ -24,11 +24,20 @@ function returnLongestString(array) {
       //IF there is a match,
         //compare the values
           //IF those values match
-            //break the cycle and return true
+            //return true
       // ELSE keep looking through until it has checked all parameters of object 1 against all parameters against object 2
         //in which case, it returns false
 
-
+function keyValueMatchMaker(object1, object2) {
+  var match = false;
+  for (var key in object1) {
+     if (Object.is(object1[key], object2[key])) {
+       match = true
+    console.log(key + ': ' + object1[key]);
+    }
+  }
+return match
+}
 
 //DRIVER CODE
 
@@ -42,10 +51,12 @@ returnLongestString(["How does a bastard", "orphan", "son of a whore", "And a Sc
 
 
 //test function that examines arrays and returns true if they share at least one key/value pair
-yourFunction({name: "Steven", age: 54}, {name: "Tamir", age: 54});
-// =>true
-yourFunction({animal: "Dog", legs: 4}, {animal: "Dog", legs: 3});
-// =>true
+keyValueMatchMaker({name: "Steven", age: 54}, {name: "Tamir", age: 54});
+// => true
+keyValueMatchMaker({animal: "Dog", legs: 4}, {animal: "Dog", legs: 3});
+// => true
+keyValueMatchMaker({animal: "Dog", legs: 4}, {name: "Tamir", age: 54});
+// => false
 
 /*Add a file called algos.js to the phase-0-tracks/js folder.
 In algos.js, write a function that takes an array of words or phrases and returns the longest word or phrase in the array. So if we gave your function the array of ["long phrase","longest phrase","longer phrase"], it would return "longest phrase". This is a logical reasoning challenge, so try to reason through this based on what you already know, rather than Googling the fanciest solution or looking up built-in sorting functions. Note that "some string".length will do what you expect in JS.
