@@ -39,6 +39,13 @@ function keyValueMatchMaker(object1, object2) {
 return match
 }
 
+
+//take in an integer
+//make an empty array
+//FOR the number of times of that integer
+  //ran a random number generator
+  //stuff the word at that index into the array
+//return the array
 //DRIVER CODE
 
 //test function to return longest string in an array
