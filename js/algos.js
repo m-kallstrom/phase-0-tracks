@@ -1,5 +1,10 @@
-
-
+// take in an array of strings
+// set a "longest string" variable to nothing
+//FOR each string in the array
+  //compare the first in the array with the variable
+  //whichever is larger, assign it to a variable
+  //continue until every string has been compared against the changing variable
+//output the variable
 
 
 
