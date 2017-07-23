@@ -7,7 +7,6 @@
   //whichever is larger, assign it to a variable
   //continue until every string has been compared against the changing variable
 //output the variable
-
 function returnLongestString(array) {
   var longestString = "";
     for (var i = 0; i < array.length; i++)
@@ -27,7 +26,6 @@ function returnLongestString(array) {
             //return true
       // ELSE keep looking through until it has checked all parameters of object 1 against all parameters against object 2
         //in which case, it returns false
-
 function keyValueMatchMaker(object1, object2) {
   var match = false;
   for (var key in object1) {
@@ -39,13 +37,59 @@ function keyValueMatchMaker(object1, object2) {
 return match
 }
 
+// ACTUAL WORD ARRAY GENERATOR
+  //take in an integer
+  //make a string of a random text
+  //make an empty array for taking in words
+  //FOR the number of times of that integer
+    //run a random number generator
+    //stuff the word at that index into the array
+  //return the array of random words
+function randomNumberGenerator(number) {
+  var newNumber = Math.floor(Math.random() * number);
+  return newNumber;
+}
 
-//take in an integer
-//make an empty array
-//FOR the number of times of that integer
-  //ran a random number generator
-  //stuff the word at that index into the array
-//return the array
+function contentArrayGenerator(required_length, exampleArray) {
+  var contentArray = [];
+  for (var i = 0; i < required_length; i++) {
+    contentArray.push (exampleArray[randomNumberGenerator(exampleArray.length)]);
+  }
+  return contentArray;
+}
+
+
+//GIBBERISH WORD GENERATOR
+  //take in an integer for array length
+  //make an empty array
+  //FOR the number of times of that integer
+    //run the gibberish word maker function
+      //which makes an empty variable for the word and an alphabet string
+      // it then runs a random number generator to decide the number of letters to add to the string
+      //FOR that number of times
+        //it shoves the letter at a randomly chosen index into the string
+    //the word maker returns the gibberish word
+    //the gibberish Generator then takes that word and stuffs it into the array
+  // return the array of gibberish words
+function gibberishGenerator(required_length) {
+  var contentArray = [];
+  for (var i = 0; i < required_length; i++) {
+    contentArray.push(gibberishWordMaker());
+  }
+  return contentArray;
+}
+
+function gibberishWordMaker() {
+  var numberOfLetters = randomNumberGenerator(10);
+  var gibberishWord = "";
+  var alphabet = "abcdefghijklmnopqrstuvwxyz";
+  for (var i = 0; i < numberOfLetters; i++) {
+    gibberishWord += alphabet[randomNumberGenerator(26)];
+  }
+  return gibberishWord;
+}
+
+
 //DRIVER CODE
 
 //test function to return longest string in an array
@@ -65,21 +109,18 @@ keyValueMatchMaker({animal: "Dog", legs: 4}, {animal: "Dog", legs: 3});
 keyValueMatchMaker({animal: "Dog", legs: 4}, {name: "Tamir", age: 54});
 // => false
 
-/*Add a file called algos.js to the phase-0-tracks/js folder.
-In algos.js, write a function that takes an array of words or phrases and returns the longest word or phrase in the array. So if we gave your function the array of ["long phrase","longest phrase","longer phrase"], it would return "longest phrase". This is a logical reasoning challenge, so try to reason through this based on what you already know, rather than Googling the fanciest solution or looking up built-in sorting functions. Note that "some string".length will do what you expect in JS.
-Add driver code that tests your function on a few arrays.
 
-In algos.js, write a function that takes two objects and checks to see if the objects share at least one key-value pair. (You'll keep adding to this file, so we suggest grouping functions at the top and testing at the bottom of the file.) Here are some sample objects and their expected return values:
+// test Actual Word Generator, which returns an array of random words from the following text:
+var text = "Fourscore and seven years ago our fathers brought forth on this continent a new nation conceived in liberty and dedicated to the proposition that all men are created equal. Now we are engaged in a great civil war testing whether that nation or any nation so conceived and so dedicated can long endure We are met on a great battlefield of that war";
+var GettysburgAddress = text.split(" ");
+console.log(contentArrayGenerator(10, GettysburgAddress));
+// =>[ 'Fourscore', 'forth', 'on', 'nation', 'are', 'brought', 'or', 'battlefield', 'and', 'on' ]
 
-yourFunction({name: "Steven", age: 54}, {name: "Tamir", age: 54}); #  true
-yourFunction({animal: "Dog", legs: 4}, {animal: "Dog", legs: 3}); #  true
-These both return true because at least one key-value pair matches between the two objects.
-If no pairs match (and keep in mind that the two objects may not even have any of the same keys), the function should return false. To make your life easier, don't worry about whether a property is a string ('age') or an identifier name (age). Those can be considered equivalent.
-Again, try to reason through the problem using the basics you've already learned, rather than looking up slick search functions that will do the job for you. We'd rather see you write code that you actually understand!
-
-Add some driver code that tests both outcomes of your function.
+//test Gibberish Word Generator, which returns an array of gibberish words of 1-10 characters in length
+console.log(gibberishGenerator(7));
+// => [ 'gehehkbnf', 'arnoe', 'wrmeps', 'ahcasmbja', 'rl', 'dcdauhttw', 'qvwpsi' ]
 
 
-Write a function that takes an integer for length, and builds and returns an array of strings of the given length. So if we ran your function with an argument of 3, we would get an array of 3 random words back (the words don't have to be actual sensical English words -- "nnnnfph" totally counts). The words should be of randomly varying length, with a minimum of 1 letter and a maximum of 10 letters. (This involves a new trick, generating a random number, that you'll have to look up, but the solution on how to do so is relatively straightforward.)
-Add driver code that does the following 10 times: generates an array, prints the array, feeds the array to your "longest word" function, and prints the result.
-*/
+
+
+//Add driver code that does the following 10 times: generates an array, prints the array, feeds the array to your "longest word" function, and prints the result.
