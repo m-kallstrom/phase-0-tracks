@@ -17,7 +17,7 @@ function returnLongestString(array) {
 }
 
 
-//Take in two objects (but they're not hashes? what?) as arguments
+//Take in two objects (hashes? what?) as arguments
   //FOR each object in the first...object. Um.
     //compare the first key of parameter 1 to each key of parameter 2
       //IF there is a match,
@@ -50,9 +50,9 @@ function randomNumberGenerator(number) {
   return newNumber;
 }
 
-function contentArrayGenerator(required_length, exampleArray) {
+function contentArrayGenerator(requiredLength, exampleArray) {
   var contentArray = [];
-  for (var i = 0; i < required_length; i++) {
+  for (var i = 0; i < requiredLength; i++) {
     contentArray.push (exampleArray[randomNumberGenerator(exampleArray.length)]);
   }
   return contentArray;
@@ -71,16 +71,16 @@ function contentArrayGenerator(required_length, exampleArray) {
     //the word maker returns the gibberish word
     //the gibberish Generator then takes that word and stuffs it into the array
   // return the array of gibberish words
-function gibberishGenerator(required_length) {
+function gibberishGenerator(requiredLength) {
   var contentArray = [];
-  for (var i = 0; i < required_length; i++) {
+  for (var i = 0; i < requiredLength; i++) {
     contentArray.push(gibberishWordMaker());
   }
   return contentArray;
 }
 
 function gibberishWordMaker() {
-  var numberOfLetters = randomNumberGenerator(10);
+  var numberOfLetters = randomNumberGenerator(10)+1;
   var gibberishWord = "";
   var alphabet = "abcdefghijklmnopqrstuvwxyz";
   for (var i = 0; i < numberOfLetters; i++) {
@@ -111,7 +111,7 @@ keyValueMatchMaker({animal: "Dog", legs: 4}, {name: "Tamir", age: 54});
 
 
 // test Actual Word Generator, which returns an array of random words from the following text:
-var text = "Fourscore and seven years ago our fathers brought forth on this continent a new nation conceived in liberty and dedicated to the proposition that all men are created equal. Now we are engaged in a great civil war testing whether that nation or any nation so conceived and so dedicated can long endure We are met on a great battlefield of that war";
+var text = "Fourscore and seven years ago our fathers brought forth on this continent a new nation conceived in liberty and dedicated to the proposition that all men are created equal Now we are engaged in a great civil war testing whether that nation or any nation so conceived and so dedicated can long endure We are met on a great battlefield of that war";
 var GettysburgAddress = text.split(" ");
 console.log(contentArrayGenerator(10, GettysburgAddress));
 // =>[ 'Fourscore', 'forth', 'on', 'nation', 'are', 'brought', 'or', 'battlefield', 'and', 'on' ]
@@ -121,6 +121,44 @@ console.log(gibberishGenerator(7));
 // => [ 'gehehkbnf', 'arnoe', 'wrmeps', 'ahcasmbja', 'rl', 'dcdauhttw', 'qvwpsi' ]
 
 
+//test that both random content generator fuctions can be called within the parameters of the longest string finder function
+for (var i = 0; i < 5; i++) {
+  var currentNonsense = gibberishGenerator(7)
+  console.log('The current array being used is: ' + currentNonsense)
+  console.log('The longest string in this array is: ' + returnLongestString(currentNonsense));
+}
+// => The current array being used is: yjjmhxu,jd,gbijjlfsj,wxbxs,iveh,qvl,hsxihitpvu
+//The longest string in this array is: hsxihitpvu
+
+//The current array being used is: dxwfrnt,rluczzrd,xdbihjro,sbyrkc,wjcsbba,aolku,mm
+//The longest string in this array is: rluczzrd
+
+//The current array being used is: ptl,epuu,ksn,shc,o,q,odycufmk
+//The longest string in this array is: odycufmk
+
+//The current array being used is: rqofn,eumr,bflg,aauclko,ml,zvw,jewd
+//The longest string in this array is: aauclko
+
+//The current array being used is: flpdypdk,dwt,oz,tnaafzn,azv,kwqzm,vrun
+//The longest string in this array is: flpdypdk
 
 
-//Add driver code that does the following 10 times: generates an array, prints the array, feeds the array to your "longest word" function, and prints the result.
+for (var i = 0; i < 5; i++) {
+  var currentArray = contentArrayGenerator(7, GettysburgAddress)
+  console.log('Hear, ye! The current array in use is: ' + currentArray)
+  console.log('I do declare the longest string in this array is: ' + returnLongestString(currentArray));
+}
+//=>Hear, ye! The current array in use is:    fathers,can,nation,brought,that,Fourscore,We
+//I do declare the longest string in this array is: Fourscore
+
+//Hear, ye! The current array in use is: seven,a,equal.,Now,that,great,We
+//I do declare the longest string in this array is: equal
+
+//Hear, ye! The current array in use is: are,nation,war,liberty,any,in,in
+//I do declare the longest string in this array is: liberty
+
+//Hear, ye! The current array in use is: war,we,whether,long,men,engaged,long
+//I do declare the longest string in this array is: whether
+
+//Hear, ye! The current array in use is: new,in,on,our,forth,are,this
+//I do declare the longest string in this array is: forth
