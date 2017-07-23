@@ -2,13 +2,14 @@
 
 // take in an array of strings
 // set a "longest string" variable to nothing
-//FOR each string in the array
+// FOR each string in the array
   //compare the first in the array with the variable
   //whichever is larger, assign it to a variable
   //continue until every string has been compared against the changing variable
 //output the variable
 function returnLongestString(array) {
   var longestString = "";
+
     for (var i = 0; i < array.length; i++)
       if (longestString.length < array[i].length) {
         longestString = array[i];
@@ -17,43 +18,40 @@ function returnLongestString(array) {
 }
 
 
-//Take in two objects (hashes? what?) as arguments
+//Take in two objects as arguments
   //FOR each object in the first...object. Um.
     //compare the first key of parameter 1 to each key of parameter 2
       //IF there is a match,
         //compare the values
-          //IF those values match
-            //return true
+        //return true
       // ELSE keep looking through until it has checked all parameters of object 1 against all parameters against object 2
         //in which case, it returns false
 function keyValueMatchMaker(object1, object2) {
   var match = false;
+
   for (var key in object1) {
      if (Object.is(object1[key], object2[key])) {
        match = true
     console.log(key + ': ' + object1[key]);
     }
   }
-return match
+return match;
 }
 
 // ACTUAL WORD ARRAY GENERATOR
-  //take in an integer
-  //make a string of a random text
+  //take in an integer and a string of a random text
   //make an empty array for taking in words
   //FOR the number of times of that integer
-    //run a random number generator
+    //generate a random number that is less than or equal to the length of the example array
     //stuff the word at that index into the array
   //return the array of random words
-function randomNumberGenerator(number) {
-  var newNumber = Math.floor(Math.random() * number);
-  return newNumber;
-}
-
 function contentArrayGenerator(requiredLength, exampleArray) {
   var contentArray = [];
+
   for (var i = 0; i < requiredLength; i++) {
-    contentArray.push (exampleArray[randomNumberGenerator(exampleArray.length)]);
+    var maxLength = exampleArray.length
+    var index = Math.floor(Math.random() * maxLength)
+    contentArray.push (exampleArray[index]);
   }
   return contentArray;
 }
@@ -65,7 +63,7 @@ function contentArrayGenerator(requiredLength, exampleArray) {
   //FOR the number of times of that integer
     //run the gibberish word maker function
       //which makes an empty variable for the word and an alphabet string
-      // it then runs a random number generator to decide the number of letters to add to the string
+      // it then runs a random number generator to decide the number of letters to add to the string (between 1 and 10)
       //FOR that number of times
         //it shoves the letter at a randomly chosen index into the string
     //the word maker returns the gibberish word
@@ -73,18 +71,21 @@ function contentArrayGenerator(requiredLength, exampleArray) {
   // return the array of gibberish words
 function gibberishGenerator(requiredLength) {
   var contentArray = [];
+
   for (var i = 0; i < requiredLength; i++) {
     contentArray.push(gibberishWordMaker());
   }
   return contentArray;
 }
 
+
 function gibberishWordMaker() {
-  var numberOfLetters = randomNumberGenerator(10)+1;
+  var numberOfLetters = Math.ceil(Math.random() * 10);
   var gibberishWord = "";
   var alphabet = "abcdefghijklmnopqrstuvwxyz";
+
   for (var i = 0; i < numberOfLetters; i++) {
-    gibberishWord += alphabet[randomNumberGenerator(26)];
+    gibberishWord += alphabet[Math.floor(Math.random() * 26)];
   }
   return gibberishWord;
 }
@@ -95,9 +96,9 @@ function gibberishWordMaker() {
 //test function to return longest string in an array
 returnLongestString(["here", "there", "everywhere"]);
 // => "everywhere"
-returnLongestString(["long phrase","longest phrase","longer phrase"])
+returnLongestString(["long phrase","longest phrase","longer phrase"]);
 // => "longest phrase"
-returnLongestString(["How does a bastard", "orphan", "son of a whore", "And a Scotsman", "dropped in the middle", "of a forgotten spot", "in the Caribbean", "by providence impoverished",  "In squalor", "grow up to be a hero and a scholar?"])
+returnLongestString(["How does a bastard", "orphan", "son of a whore", "And a Scotsman", "dropped in the middle", "of a forgotten spot", "in the Caribbean", "by providence impoverished",  "In squalor", "grow up to be a hero and a scholar?"]);
 // => "grow up to be a hero and a scholar?"
 
 
@@ -123,8 +124,8 @@ console.log(gibberishGenerator(7));
 
 //test that both random content generator fuctions can be called within the parameters of the longest string finder function
 for (var i = 0; i < 5; i++) {
-  var currentNonsense = gibberishGenerator(7)
-  console.log('The current array being used is: ' + currentNonsense)
+  var currentNonsense = gibberishGenerator(7);
+  console.log('The current array being used is: ' + currentNonsense);
   console.log('The longest string in this array is: ' + returnLongestString(currentNonsense));
 }
 // => The current array being used is: yjjmhxu,jd,gbijjlfsj,wxbxs,iveh,qvl,hsxihitpvu
@@ -144,8 +145,8 @@ for (var i = 0; i < 5; i++) {
 
 
 for (var i = 0; i < 5; i++) {
-  var currentArray = contentArrayGenerator(7, GettysburgAddress)
-  console.log('Hear, ye! The current array in use is: ' + currentArray)
+  var currentArray = contentArrayGenerator(7, GettysburgAddress);
+  console.log('Hear, ye! The current array in use is: ' + currentArray);
   console.log('I do declare the longest string in this array is: ' + returnLongestString(currentArray));
 }
 //=>Hear, ye! The current array in use is:    fathers,can,nation,brought,that,Fourscore,We
