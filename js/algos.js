@@ -19,7 +19,7 @@ function returnLongestString(array) {
 
 
 //Take in two objects as arguments
-  //FOR each object in the first...object. Um.
+  //FOR each object in the first...um, object.
     //compare the first key of parameter 1 to each key of parameter 2
       //IF there is a match,
         //compare the values
@@ -37,6 +37,7 @@ function keyValueMatchMaker(object1, object2) {
   }
 return match;
 }
+
 
 // ACTUAL WORD ARRAY GENERATOR
   //take in an integer and a string of a random text
@@ -89,6 +90,9 @@ function gibberishWordMaker() {
   }
   return gibberishWord;
 }
+
+// QUESTION:
+  // When refactoring, I took out a function that would generate a random number. I found the code was actually more readable without it. When making a decision like this, is it best to go with shorter and readable code? Or is having that extra function going to be faster and make the code more concise since similar code isn't repeated?
 
 
 //DRIVER CODE
@@ -152,8 +156,8 @@ for (var i = 0; i < 5; i++) {
 //=>Hear, ye! The current array in use is:    fathers,can,nation,brought,that,Fourscore,We
 //I do declare the longest string in this array is: Fourscore
 
-//Hear, ye! The current array in use is: seven,a,equal.,Now,that,great,We
-//I do declare the longest string in this array is: equal
+//Hear, ye! The current array in use is: seven,a,equal,Now,that,great,We
+//I do declare the longest string in this array is: seven
 
 //Hear, ye! The current array in use is: are,nation,war,liberty,any,in,in
 //I do declare the longest string in this array is: liberty
