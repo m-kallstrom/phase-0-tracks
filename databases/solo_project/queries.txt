@@ -12,6 +12,7 @@
 2. Update an item that meets some condition (you can choose a condition that makes sense).
 
     UPDATE family SET common_name="Parabuteo" WHERE id=2;
+    Changes would be:
 
     1|Broad-Wing Hawks|Accipitridae Buteo
     2|Parabuteo|Accipitridae Parabuteo
@@ -22,6 +23,7 @@
 
 
     UPDATE species SET beginner_bird="false" WHERE common_name="Golden Eagle";
+    Changes would be:
 
     1|Great Horned Owl|virginianus|153|false|6|6|Owls|Strigidae Bubo
     2|Eurasian Eagle-Owl|bubo|188|false|6|6|Owls|Strigidae Bubo
@@ -103,6 +105,7 @@
 5. Delete an item that meets some condition (you can choose a condition that makes sense).
 
     DELETE FROM species WHERE common_name="Bald Eagle";
+    Changes would be:
 
     1|Great Horned Owl|virginianus|153|false|6|6|Owls|Strigidae Bubo
     2|Eurasian Eagle-Owl|bubo|188|false|6|6|Owls|Strigidae Bubo
