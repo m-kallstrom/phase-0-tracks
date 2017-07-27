@@ -30,7 +30,7 @@ INSERT INTO species (common_name, latin_species, max_average_wingspan, beginner_
 
 INSERT INTO species (common_name, latin_species, max_average_wingspan, beginner_bird, family) VALUES ("American Kestrel", "sparverius", 61, "true", 5);
 
-
+INSERT INTO species (common_name, latin_species, max_average_wingspan, beginner_bird, family) VALUES ("Bald Eagle", "leucocephalus", 230, "false", 4);
 
 
 
