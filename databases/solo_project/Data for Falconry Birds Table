@@ -1,0 +1,5 @@
+Data for Falconry Birds Table:
+
+INSERT INTO species (common_name, latin_species, max_average_wingspan, beginner_bird, family) VALUES ("Gumdrop", 2, "true");
+
+INSERT INTO family (common_name, latin_family_genus) VALUES ("Gumdrop", 2, "true");
