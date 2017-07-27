@@ -1,12 +1,41 @@
 Data for Falconry Birds Table:
 
-INSERT INTO species (common_name, latin_species, max_average_wingspan, beginner_bird, family) VALUES ("Gumdr", 2, "true");
+SPECIES TABLE
+
+INSERT INTO species (common_name, latin_species, max_average_wingspan, beginner_bird, family) VALUES ("Great Horned Owl", "virginianus", 153, "false", 6);
+
+INSERT INTO species (common_name, latin_species, max_average_wingspan, beginner_bird, family) VALUES ("Eurasian Eagle-Owl", "bubo", 188, "false", 6);
+
+INSERT INTO species (common_name, latin_species, max_average_wingspan, beginner_bird, family) VALUES ("Harris' Hawk", "unicinctus", 120, "true", 2);
+
+INSERT INTO species (common_name, latin_species, max_average_wingspan, beginner_bird, family) VALUES ("Red-Tailed Hawk", "jamaicensis", 141, "true", 1);
+
+INSERT INTO species (common_name, latin_species, max_average_wingspan, beginner_bird, family) VALUES ("Ferruginous Hawk", "regalis", 152, "false", 1);
+
+INSERT INTO species (common_name, latin_species, max_average_wingspan, beginner_bird, family) VALUES ("Red-Shouldered Hawk", "lineatus", 127, "false", 1);
+
+INSERT INTO species (common_name, latin_species, max_average_wingspan, beginner_bird, family) VALUES ("Northern Goshawk", "gentilis", 127, "false", 3);
+
+INSERT INTO species (common_name, latin_species, max_average_wingspan, beginner_bird, family) VALUES ("Sharp-Shinned Hawk", "striatus", 68, "false", 3);
+
+INSERT INTO species (common_name, latin_species, max_average_wingspan, beginner_bird, family) VALUES ("Cooper's Hawk", "cooperii", 94, "false", 3);
+
+INSERT INTO species (common_name, latin_species, max_average_wingspan, beginner_bird, family) VALUES ("Golden Eagle", "chrysaetos", 234, "true", 4);
+
+INSERT INTO species (common_name, latin_species, max_average_wingspan, beginner_bird, family) VALUES ("Pergrine Falcon", "peregrinus", 120, "false", 5);
+
+INSERT INTO species (common_name, latin_species, max_average_wingspan, beginner_bird, family) VALUES ("Gyrfalcon", "rusticolus", 130, "false", 5);
+
+INSERT INTO species (common_name, latin_species, max_average_wingspan, beginner_bird, family) VALUES ("Merlin", "columbarius", 73, "false", 5);
+
+INSERT INTO species (common_name, latin_species, max_average_wingspan, beginner_bird, family) VALUES ("American Kestrel", "sparverius", 61, "true", 5);
 
 
 
 
 
 
+FAMILY TABLE
 
 INSERT INTO family (common_name, latin_family_genus) VALUES ("Broad-Wing Hawks", "Accipitridae Buteo");
 
