@@ -1,5 +1,23 @@
 Data for Falconry Birds Table:
 
-INSERT INTO species (common_name, latin_species, max_average_wingspan, beginner_bird, family) VALUES ("Gumdrop", 2, "true");
+INSERT INTO species (common_name, latin_species, max_average_wingspan, beginner_bird, family) VALUES ("Gumdr", 2, "true");
 
-INSERT INTO family (common_name, latin_family_genus) VALUES ("Gumdrop", 2, "true");
+
+
+
+
+
+
+INSERT INTO family (common_name, latin_family_genus) VALUES ("Broad-Wing Hawks", "Accipitridae Buteo");
+
+INSERT INTO family (common_name, latin_family_genus) VALUES ("That Cousin You're Not Sure How They're Related To You of the Falconry World", "Accipitridae Parabuteo");
+
+INSERT INTO family (common_name, latin_family_genus) VALUES ("True Hawks", "Accipitridae Accipiter");
+
+INSERT INTO family (common_name, latin_family_genus) VALUES ("Eagles", "Accipitridae Aquila");
+
+INSERT INTO family (common_name, latin_family_genus) VALUES ("Falcons", "Falconidae Falco");
+
+INSERT INTO family (common_name, latin_family_genus) VALUES ("Owls", "Strigidae Bubo");
+
+
