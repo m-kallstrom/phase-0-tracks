@@ -105,7 +105,7 @@
     13|Merlin|columbarius|73|false|5
     14|American Kestrel|sparverius|61|true|5
 
-Try a few different joins in your database, and record the commands and the output
+Bonus: Try a few different joins in your database, and record the commands and the output
 
 
   SELECT family.common_name, species.common_name FROM species INNER JOIN family ON species.family = family.id;
@@ -125,3 +125,107 @@ Try a few different joins in your database, and record the commands and the outp
     Falcons|Gyrfalcon
     Falcons|Merlin
     Falcons|American Kestrel
+
+    SELECT family.common_name, species.common_name, species.max_average_wingspan FROM species CROSS JOIN family;
+
+        Broad-Wing Hawks|Great Horned Owl|153
+        Parabuteo|Great Horned Owl|153
+        True Hawks|Great Horned Owl|153
+        Eagles|Great Horned Owl|153
+        Falcons|Great Horned Owl|153
+        Owls|Great Horned Owl|153
+        Broad-Wing Hawks|Eurasian Eagle-Owl|188
+        Parabuteo|Eurasian Eagle-Owl|188
+        True Hawks|Eurasian Eagle-Owl|188
+        Eagles|Eurasian Eagle-Owl|188
+        Falcons|Eurasian Eagle-Owl|188
+        Owls|Eurasian Eagle-Owl|188
+        Broad-Wing Hawks|Harris' Hawk|120
+        Parabuteo|Harris' Hawk|120
+        True Hawks|Harris' Hawk|120
+        Eagles|Harris' Hawk|120
+        Falcons|Harris' Hawk|120
+        Owls|Harris' Hawk|120
+        Broad-Wing Hawks|Red-Tailed Hawk|141
+        Parabuteo|Red-Tailed Hawk|141
+        True Hawks|Red-Tailed Hawk|141
+        Eagles|Red-Tailed Hawk|141
+        Falcons|Red-Tailed Hawk|141
+        Owls|Red-Tailed Hawk|141
+        Broad-Wing Hawks|Ferruginous Hawk|152
+        Parabuteo|Ferruginous Hawk|152
+        True Hawks|Ferruginous Hawk|152
+        Eagles|Ferruginous Hawk|152
+        Falcons|Ferruginous Hawk|152
+        Owls|Ferruginous Hawk|152
+        Broad-Wing Hawks|Red-Shouldered Hawk|127
+        Parabuteo|Red-Shouldered Hawk|127
+        True Hawks|Red-Shouldered Hawk|127
+        Eagles|Red-Shouldered Hawk|127
+        Falcons|Red-Shouldered Hawk|127
+        Owls|Red-Shouldered Hawk|127
+        Broad-Wing Hawks|Northern Goshawk|127
+        Parabuteo|Northern Goshawk|127
+        True Hawks|Northern Goshawk|127
+        Eagles|Northern Goshawk|127
+        Falcons|Northern Goshawk|127
+        Owls|Northern Goshawk|127
+        Broad-Wing Hawks|Sharp-Shinned Hawk|68
+        Parabuteo|Sharp-Shinned Hawk|68
+        True Hawks|Sharp-Shinned Hawk|68
+        Eagles|Sharp-Shinned Hawk|68
+        Falcons|Sharp-Shinned Hawk|68
+        Owls|Sharp-Shinned Hawk|68
+        Broad-Wing Hawks|Cooper's Hawk|94
+        Parabuteo|Cooper's Hawk|94
+        True Hawks|Cooper's Hawk|94
+        Eagles|Cooper's Hawk|94
+        Falcons|Cooper's Hawk|94
+        Owls|Cooper's Hawk|94
+        Broad-Wing Hawks|Golden Eagle|234
+        Parabuteo|Golden Eagle|234
+        True Hawks|Golden Eagle|234
+        Eagles|Golden Eagle|234
+        Falcons|Golden Eagle|234
+        Owls|Golden Eagle|234
+        Broad-Wing Hawks|Peregrine Falcon|120
+        Parabuteo|Peregrine Falcon|120
+        True Hawks|Peregrine Falcon|120
+        Eagles|Peregrine Falcon|120
+        Falcons|Peregrine Falcon|120
+        Owls|Peregrine Falcon|120
+        Broad-Wing Hawks|Gyrfalcon|130
+        Parabuteo|Gyrfalcon|130
+        True Hawks|Gyrfalcon|130
+        Eagles|Gyrfalcon|130
+        Falcons|Gyrfalcon|130
+        Owls|Gyrfalcon|130
+        Broad-Wing Hawks|Merlin|73
+        Parabuteo|Merlin|73
+        True Hawks|Merlin|73
+        Eagles|Merlin|73
+        Falcons|Merlin|73
+        Owls|Merlin|73
+        Broad-Wing Hawks|American Kestrel|61
+        Parabuteo|American Kestrel|61
+        True Hawks|American Kestrel|61
+        Eagles|American Kestrel|61
+        Falcons|American Kestrel|61
+        Owls|American Kestrel|61
+
+        SELECT family.latin_family_genus, species.latin_species, species.common_name, species.beginner_bird FROM species NATURAL LEFT OUTER JOIN family;
+
+        |virginianus|Great Horned Owl|false
+        |bubo|Eurasian Eagle-Owl|false
+        |unicinctus|Harris' Hawk|true
+        |jamaicensis|Red-Tailed Hawk|true
+        |regalis|Ferruginous Hawk|false
+        |lineatus|Red-Shouldered Hawk|false
+        |gentilis|Northern Goshawk|false
+        |striatus|Sharp-Shinned Hawk|false
+        |cooperii|Cooper's Hawk|false
+        |chrysaetos|Golden Eagle|false
+        |peregrinus|Peregrine Falcon|false
+        |rusticolus|Gyrfalcon|false
+        |columbarius|Merlin|false
+        |sparverius|American Kestrel|true
