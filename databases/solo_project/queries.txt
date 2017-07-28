@@ -1,0 +1,127 @@
+1. Display the information in one table (either table is fine).
+
+    SELECT * FROM family;
+
+    1|Broad-Wing Hawks|Accipitridae Buteo
+    2|That Cousin You're Not Sure How They're Related To You of the Falconry World|Accipitridae Parabuteo
+    3|True Hawks|Accipitridae Accipiter
+    4|Eagles|Accipitridae Aquila
+    5|Falcons|Falconidae Falco
+    6|Owls|Strigidae Bubo
+
+2. Update an item that meets some condition (you can choose a condition that makes sense).
+
+    UPDATE family SET common_name="Parabuteo" WHERE id=2;
+    Changes would be:
+
+    1|Broad-Wing Hawks|Accipitridae Buteo
+    2|Parabuteo|Accipitridae Parabuteo
+    3|True Hawks|Accipitridae Accipiter
+    4|Eagles|Accipitridae Aquila
+    5|Falcons|Falconidae Falco
+    6|Owls|Strigidae Bubo
+
+
+    UPDATE species SET beginner_bird="false" WHERE common_name="Golden Eagle";
+    Changes would be:
+
+    1|Great Horned Owl|virginianus|153|false|6|6|Owls|Strigidae Bubo
+    2|Eurasian Eagle-Owl|bubo|188|false|6|6|Owls|Strigidae Bubo
+    3|Harris' Hawk|unicinctus|120|true|2|2|Parabuteo|Accipitridae Parabuteo
+    4|Red-Tailed Hawk|jamaicensis|141|true|1|1|Broad-Wing Hawks|Accipitridae Buteo
+    5|Ferruginous Hawk|regalis|152|false|1|1|Broad-Wing Hawks|Accipitridae Buteo
+    6|Red-Shouldered Hawk|lineatus|127|false|1|1|Broad-Wing Hawks|Accipitridae Buteo
+    7|Northern Goshawk|gentilis|127|false|3|3|True Hawks|Accipitridae Accipiter
+    8|Sharp-Shinned Hawk|striatus|68|false|3|3|True Hawks|Accipitridae Accipiter
+    9|Cooper's Hawk|cooperii|94|false|3|3|True Hawks|Accipitridae Accipiter
+    10|Golden Eagle|chrysaetos|234|false|4|4|Eagles|Accipitridae Aquila
+    11|Bald Eagle|leucocephalus|230|false|4|4|Eagles|Accipitridae Aquila
+    12|Peregrine Falcon|peregrinus|120|false|5|5|Falcons|Falconidae Falco
+    13|Gyrfalcon|rusticolus|130|false|5|5|Falcons|Falconidae Falco
+    14|Merlin|columbarius|73|false|5|5|Falcons|Falconidae Falco
+    15|American Kestrel|sparverius|61|true|5|5|Falcons|Falconidae Falco
+
+
+3. Display the information in both tables using one query.
+
+    SELECT * FROM species, family WHERE species.family = family.id;
+
+    1|Great Horned Owl|virginianus|153|false|6|6|Owls|Strigidae Bubo
+    2|Eurasian Eagle-Owl|bubo|188|false|6|6|Owls|Strigidae Bubo
+    3|Harris' Hawk|unicinctus|120|true|2|2|Parabuteo|Accipitridae Parabuteo
+    4|Red-Tailed Hawk|jamaicensis|141|true|1|1|Broad-Wing Hawks|Accipitridae Buteo
+    5|Ferruginous Hawk|regalis|152|false|1|1|Broad-Wing Hawks|Accipitridae Buteo
+    6|Red-Shouldered Hawk|lineatus|127|false|1|1|Broad-Wing Hawks|Accipitridae Buteo
+    7|Northern Goshawk|gentilis|127|false|3|3|True Hawks|Accipitridae Accipiter
+    8|Sharp-Shinned Hawk|striatus|68|false|3|3|True Hawks|Accipitridae Accipiter
+    9|Cooper's Hawk|cooperii|94|false|3|3|True Hawks|Accipitridae Accipiter
+    10|Golden Eagle|chrysaetos|234|false|4|4|Eagles|Accipitridae Aquila
+    11|Bald Eagle|leucocephalus|230|false|4|4|Eagles|Accipitridae Aquila
+    12|Peregrine Falcon|peregrinus|120|false|5|5|Falcons|Falconidae Falco
+    13|Gyrfalcon|rusticolus|130|false|5|5|Falcons|Falconidae Falco
+    14|Merlin|columbarius|73|false|5|5|Falcons|Falconidae Falco
+    15|American Kestrel|sparverius|61|true|5|5|Falcons|Falconidae Falco
+
+
+4. Display a narrower selection of columns (fewer columns than all of them, in other words) from both tables using one query.
+
+
+    SELECT species.common_name, family.latin_family_genus, species.latin_species FROM species JOIN family ON species.family = family.id;
+
+    Great Horned Owl|Strigidae Bubo|virginianus
+    Eurasian Eagle-Owl|Strigidae Bubo|bubo
+    Harris' Hawk|Accipitridae Parabuteo|unicinctus
+    Red-Tailed Hawk|Accipitridae Buteo|jamaicensis
+    Ferruginous Hawk|Accipitridae Buteo|regalis
+    Red-Shouldered Hawk|Accipitridae Buteo|lineatus
+    Northern Goshawk|Accipitridae Accipiter|gentilis
+    Sharp-Shinned Hawk|Accipitridae Accipiter|striatus
+    Cooper's Hawk|Accipitridae Accipiter|cooperii
+    Golden Eagle|Accipitridae Aquila|chrysaetos
+    Bald Eagle|Accipitridae Aquila|leucocephalus
+    Peregrine Falcon|Falconidae Falco|peregrinus
+    Gyrfalcon|Falconidae Falco|rusticolus
+    Merlin|Falconidae Falco|columbarius
+    American Kestrel|Falconidae Falco|sparverius
+
+
+5. Delete an item that meets some condition (you can choose a condition that makes sense).
+
+    DELETE FROM species WHERE common_name="Bald Eagle";
+    Changes would be:
+
+    1|Great Horned Owl|virginianus|153|false|6
+    2|Eurasian Eagle-Owl|bubo|188|false|6
+    3|Harris' Hawk|unicinctus|120|true|2
+    4|Red-Tailed Hawk|jamaicensis|141|true|1
+    5|Ferruginous Hawk|regalis|152|false|1
+    6|Red-Shouldered Hawk|lineatus|127|false|1
+    7|Northern Goshawk|gentilis|127|false|3
+    8|Sharp-Shinned Hawk|striatus|68|false|3
+    9|Cooper's Hawk|cooperii|94|false|3
+    10|Golden Eagle|chrysaetos|234|false|4
+    11|Peregrine Falcon|peregrinus|120|false|5
+    12|Gyrfalcon|rusticolus|130|false|5
+    13|Merlin|columbarius|73|false|5
+    14|American Kestrel|sparverius|61|true|5
+
+Try a few different joins in your database, and record the commands and the output
+
+
+  SELECT family.common_name, species.common_name FROM species INNER JOIN family ON species.family = family.id;
+
+    Owls|Great Horned Owl
+    Owls|Eurasian Eagle-Owl
+    Parabuteo|Harris' Hawk
+    Broad-Wing Hawks|Red-Tailed Hawk
+    Broad-Wing Hawks|Ferruginous Hawk
+    Broad-Wing Hawks|Red-Shouldered Hawk
+    True Hawks|Northern Goshawk
+    True Hawks|Sharp-Shinned Hawk
+    True Hawks|Cooper's Hawk
+    Eagles|Golden Eagle
+    Eagles|Bald Eagle
+    Falcons|Peregrine Falcon
+    Falcons|Gyrfalcon
+    Falcons|Merlin
+    Falcons|American Kestrel
