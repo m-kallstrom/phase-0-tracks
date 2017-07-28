@@ -1,0 +1,16 @@
+sqlite> SELECT users.first_name, users.last_name, businesses.business_name, reviews.stars, reviews.comment
+   ...> FROM ((reviews
+   ...> INNER JOIN  users ON users.id = reviews.user_id)
+   ...> INNER JOIN  businesses ON businesses.id = reviews.business_id);
+Bradford|Pitt|Grundy Hollow Wedding Chapel|3|The name alone sounds gross, and it was.
+Mandy|Kaling|Amir's Towing|1|Bunch of vultures
+Angela|Jolie|The Beagle Nightclub|5|How can hate puppies in a nightclub?
+
+
+sqlite>
+SELECT users.first_name, users.last_name, businesses.id, reviews.stars, reviews.comment
+   ...> FROM ((reviews
+   ...> INNER JOIN  users ON users.id = reviews.user_id)
+   ...> INNER JOIN  businesses ON businesses.id = reviews.business_id)
+   ...> WHERE businesses.id = 3;
+Angela|Jolie|3|5|How can hate puppies in a nightclub?
