@@ -3,8 +3,8 @@
 require 'sqlite3'
 require 'faker'
 
+
 db = SQLite3::Database.new("grocery_list.db")
-###possbily use $DB as a global variable for multiple files
 
 
 create_category_table = <<-SQL
@@ -14,18 +14,17 @@ create_category_table = <<-SQL
   )
 SQL
 ### Ask people to enter items in the order you usually go through the store
-db.execute(create_category_table)
 
 create_item_table = <<-SQL
-  CREATE TABLE IF NOT EXISTS item(
+  CREATE TABLE IF NOT EXISTS items(
     id INTEGER PRIMARY KEY,
     name VARCHAR(255),
-    quantity INT,
-    category_name VARCHAR(255)
-    FOREIGN KEY category_name REFERENCES category(id)
+    quantity INTEGER,
+    category_name VARCHAR(255),
+    FOREIGN KEY (category_name) REFERENCES category(id)
   )
 SQL
-db.execute(create_item_table)
+
 
 #Link necessary files
 #Create two tables for categories and items
@@ -43,20 +42,50 @@ db.execute(create_item_table)
         #Ask the user which number is wrong and what number it should be
         #Delete from old place and insert into new place
     #Repeat until user is happy
+    #Iterate through the list to add each to the SQL table
 
 #(STRETCH GOAL) have the ability to reuse this template or make a new one.
-  #In which case it would jump right to show them the list and ask if it's cool.
+  #In which case it would jump right to adding items:
 
- #Add items
+
+#Add/Update items
   #Ask user to enter items one at a time, with optional quantity
-  #Check if the item is already in the list
+  #IF the item is already in the list
+    #update the table with the new quantity
   #Assuming it's new,
     #Execute a SQL command to stuff that into the items table
 
 
+#Name your list or load an old one
+  #If it doesn't exist, create it
+  #If it does exist, ask if they want to pull it up or overwrite the items
+def add_categories(db, category)
+
+
+end
+
+def add_update_item(db, category, name, quantity=1)
+
+  db.execute("INSERT INTO items (name, quantity, category) VALUES (?, ?, ?)", [name, quantity, category])
+end
+
+#delete an item
+  #ask the user for the item they want to delete
+  #remove the item from the table with a SQL command
 
 
 
+
+#DRIVER CODE
+#greet user, ask for a list of categories in the general order in which they shop:
+
+db.execute(create_category_table)
+db.execute(create_item_table)
+
+
+
+
+=begin
 #Add additional items after the first round
   #input the list, new category, item and optional quantity
   #store in list
@@ -166,3 +195,5 @@ puts "Enjoy your shopping trip!"
 
 ###Use classes and separate files?
 ##overwrite puts with def to_s
+
+=end
