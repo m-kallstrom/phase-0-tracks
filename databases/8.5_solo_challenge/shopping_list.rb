@@ -44,7 +44,14 @@ db.execute(create_item_table)
         #Delete from old place and insert into new place
     #Repeat until user is happy
 
+#(STRETCH GOAL) have the ability to reuse this template or make a new one.
+  #In which case it would jump right to show them the list and ask if it's cool.
+
  #Add items
+  #Ask user to enter items one at a time, with optional quantity
+  #Check if the item is already in the list
+  #Assuming it's new,
+    #Execute a SQL command to stuff that into the items table
 
 
 
