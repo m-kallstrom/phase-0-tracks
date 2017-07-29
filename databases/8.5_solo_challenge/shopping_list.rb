@@ -2,10 +2,22 @@
 ####Here is the code from the category list maker. I would like it to write to a table or two, and be able to save, retrieve, delete, and print tables.
 require 'sqlite3'
 require 'faker'
+#Link necessary files
+#Create two tables for categories and items
+  #Category has id and category name
+  #Item has id, item name, quantity, and foreign key to category
 
+#Name your database or load an old one
+  #If it doesn't exist, create it
+  #If it does exist, ask if they want to pull it up or overwrite the items
+  #Need some security measures in here!
+def make_or_resuse_a_db(database)
+  database += ".db"
+  $DB = SQLite3::Database.new(database)
+end
 
-db = SQLite3::Database.new("grocery_list.db")
-
+#Create the tables for category and items
+  #send the commands to SQL when called
 def create_category_table
 category_table = <<-SQL
   CREATE TABLE IF NOT EXISTS category(
@@ -14,7 +26,6 @@ category_table = <<-SQL
   )
 SQL
 end
-### Ask people to enter items in the order you usually go through the store
 
 def create_item_table
   item_table = <<-SQL
@@ -29,10 +40,50 @@ def create_item_table
 end
 
 
-#Link necessary files
-#Create two tables for categories and items
-  #Category has id and category name
-  #Item has id, item name, quantity, and foreign key to category
+#Add/Update items
+  #Ask user to enter items one at a time, with optional quantity
+  #IF the item is already in the list
+    #update the table with the new quantity
+  #Assuming it's new,
+    #Execute a SQL command to stuff that into the items table
+def add_categories(category)
+  $DB.execute("INSERT INTO category (name) VALUES (?)", [category])
+end
+
+def add_update_item(category, name, quantity=1)
+
+  $DB.execute("INSERT INTO items (name, quantity, category_name) VALUES (?, ?, ?)", [name, quantity, category])
+end
+
+
+#delete an item
+  #ask the user for the item they want to delete
+  #remove the item from the table with a SQL command
+def delete_item(name)
+  $DB.execute("DELETE FROM items WHERE name=? LIMIT 1", [name])
+end
+
+
+#Make a user friendly list:
+  #Pull the data from the database
+  #List numerically by category and then alphabetically by item
+  #Upcase the categories
+  #downcase the items
+def pretty_list
+
+end
+
+
+#DRIVER CODE
+#greet user, ask for a list of categories in the general order in which they shop:
+make_or_resuse_a_db("grocery_list")
+$DB.execute(create_category_table)
+$DB.execute(create_item_table)
+add_categories("Fruit and Veg")
+add_categories("Dairy")
+add_update_item(1, "carrots", 5)
+add_update_item(2, "milk", 1)
+delete_item("carrots")
 
 #List set up
   #Ask user for a list of categories in order of how they go around the grocery store
@@ -48,50 +99,10 @@ end
     #Iterate through the list to add each to the SQL table
 
 #(STRETCH GOAL) have the ability to reuse this template or make a new one.
-  #In which case it would jump right to adding items:
+  #In which case it would
+  #drop the content from the items table
+  #jump right to adding items in the driver code
 
-
-#Add/Update items
-  #Ask user to enter items one at a time, with optional quantity
-  #IF the item is already in the list
-    #update the table with the new quantity
-  #Assuming it's new,
-    #Execute a SQL command to stuff that into the items table
-
-
-#Name your list or load an old one
-  #If it doesn't exist, create it
-  #If it does exist, ask if they want to pull it up or overwrite the items
-def add_categories(db, category)
-  db.execute("INSERT INTO category (name) VALUES (?)", [category])
-
-end
-
-def add_update_item(db, category, name, quantity=1)
-
-  db.execute("INSERT INTO items (name, quantity, category_name) VALUES (?, ?, ?)", [name, quantity, category])
-end
-
-#delete an item
-  #ask the user for the item they want to delete
-  #remove the item from the table with a SQL command
-
-def delete_item(db, name)
-  db.execute("DELETE FROM items WHERE name=? LIMIT 1", [name])
-end
-
-
-
-#DRIVER CODE
-#greet user, ask for a list of categories in the general order in which they shop:
-
-db.execute(create_category_table)
-db.execute(create_item_table)
-add_categories(db, "Fruit and Veg")
-add_categories(db, "Dairy")
-add_update_item(db, 1, "carrots", 5)
-add_update_item(db, 2, "milk", 1)
-delete_item(db, "carrots")
 
 
 
