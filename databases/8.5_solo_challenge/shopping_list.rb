@@ -1,6 +1,8 @@
 
 ####Here is the code from the category list maker. I would like it to write to a table or two, and be able to save, retrieve, delete, and print tables.
 require 'sqlite3'
+require 'twilio-ruby'
+require_relative 'sms'
 
 #Link necessary files
 #Create two tables for categories and items
@@ -8,15 +10,15 @@ require 'sqlite3'
   #Item has id, item name, quantity, and foreign key to category
 
 #Name your database or load an old one
-  #If it doesn't exist, create it
-  #If it does exist, ask if they want to pull it up or overwrite the items
+  #IF it doesn't exist, create it
+  #IF it does exist, ask if they want to pull it up or overwrite the items
   #Need some security measures in here!
-#def make_or_resuse_a_db(database)
- # database += ".db"
-  $DB = SQLite3::Database.new("grocery_list.db")
- # $DB = SQLite3::Database.new(database)
+def make_or_resuse_a_db(database)
+  database += ".db"
+ # $DB = SQLite3::Database.new("grocery_list.db")
+  $DB = SQLite3::Database.new(database)
   $DB.results_as_hash = true
-#end
+end
 
 #Create the tables for category and items
   #send the commands to SQL when called
@@ -59,16 +61,21 @@ def add_item(category_number, name, quantity=1)
   $DB.execute("INSERT INTO items (name, quantity, category_name) VALUES (?, ?, ?)", [name, quantity, category_number])
 end
 
+
+#update an item name/quantity already in the list
 def update_item(category_number, name, quantity=1)
   $DB.execute("UPDATE items SET name =?, quantity =? WHERE category_name=?;", [name, quantity, category_number])
 end
 
+
 #Look up category number for adding an item
   #select the category information from the database
+  #return the id number for that category
 def look_up_category_id(input_name)
   categories_from_db = $DB.execute("SELECT * FROM category WHERE name=?", [input_name])
   categories_from_db[0]["id"]
 end
+
 
 #delete an item
   #ask the user for the item they want to delete
@@ -87,6 +94,7 @@ def pretty_list
 items_list_from_db = $DB.execute("SELECT category.name, items.name, items.quantity FROM category INNER JOIN items ON items.category_name = category.id")
 list = {}
 items_list_from_db.each do |hash|
+    p hash
     if list.include?(hash[0])
      list[hash[0]][hash[1]] = hash[2]
     else
@@ -103,6 +111,19 @@ items_list_from_db.each do |hash|
   end
 end
 
+def write_to_file(list)
+  somefile = File.open("sample.txt", "w")
+  somefile.puts list
+  somefile.close
+end
+
+def send_text_message(list)
+  client.messages.create(
+  from: "+19149964976",
+  to: "+19144827293",
+  body: list
+)
+end
 
 #DRIVER CODE
 #greet user, ask for a list of categories in the general order in which they shop:
@@ -116,12 +137,12 @@ end
 # add_update_item(1, "apples", 2)
 # add_update_item(2, "yogurt", 4)
 # delete_item("carrots")
-#pretty_list
+# pretty_list
 
-p look_up_category_id("dairy")
+#p look_up_category_id("dairy")
 
 
-=begin
+
 
 
 #List set up
@@ -141,12 +162,11 @@ puts "(Type carefully because it will create a new list entirely if it's off.)"
 list_name = gets.chomp.downcase
 make_or_resuse_a_db(list_name)
 
-puts "Okay! Let's add some categories to this list. Add them in the order you normally shop through for easiest use. Type 'done' when you're ready:"
+puts "Okay! Let's add some categories to this list. Add them in the order you normally shop through the store for easiest use. Type 'done' when you're ready:"
 input_category = gets.chomp.downcase
 category_list = []
 
-  loop do
-    break if input_category == "done"
+  until input_category == "done"
     category_list << input_category
     p category_list
     puts "Add another or type 'done':"
@@ -158,8 +178,8 @@ puts "Great! Does the order on this look good to you?"
 puts category_list.each_with_index {|category, index| puts "#{index}: #{category}"
 puts "If you want to move an item, type the number. Otherwise, enter 'done':"
 input_number = gets.chomp
-  loop do
-    break if input_number == "done"
+
+  until input_number == "done"
     index = input_number.to_i
     puts "What number should it be at?"
     input_number = gets.chomp
@@ -168,6 +188,8 @@ input_number = gets.chomp
     puts "How's this? Type 'done' to continue or select another number to change:"
     input_number = gets.chomp
   end
+
+#Add the corrected category list into the database
 category_list.each {|category| add_categories(category)}
 
 
@@ -182,21 +204,31 @@ input_item = gets.chomp.downcase
 until input_item == "done"
   item_array = input_item.split(" ")
   add_update_item(item_array[0], item_array[1], *item_array[2])
+  pretty_list
   puts "Type the next item or 'done' to move on:"
   input_item = gets.chomp.downcase
 end
 
-#puts pretty_list
-#puts "How's this look?"
-#puts "Type 'update' to add or update the quantity of the item."
-#input_change_table = gets.chomp.downcase
+pretty_list
+puts "How's this look?"
+puts "Type 'update' to update the quantity of the item."
+input_change_table = gets.chomp.downcase
 
 #put in a loop here for changing
-#puts "Okay. You know the drill now. Category, item name, quantity:"
-#rerun the add_update_item method for any entries.
+puts "Okay. You know the drill now. Category, item name, quantity:"
+updated_item = gets.chomp
 
+#Streamline an add/update feature, where you select one and then loop until done, and go back to the add/update loop. Maybe have options for adding a new category or updating the name of something. That's a bit stretch though.
 
-#Maybe it needs to be in a hash as it's being entered, much like the previous version
+#here I would like the option to print the list physically, or maybe text it to yourself. IDK.
+  #print a physical list for those kinds of people who walk into a bookstore and wax poetic about 'holding a book and turning the pages'
+  #text a copy to those who are more practical, forgetful, or eco-conscious
+
+puts "Save your file so you can print it and access it later:"
+
+write_to_file(pretty_list)
+
+puts "Text a copy of this list to yourself or some unsuspecting victim:"
 
 
 
