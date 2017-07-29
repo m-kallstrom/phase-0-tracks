@@ -6,6 +6,32 @@ require 'faker'
 db = SQLite3::Database.new("grocery_list.db")
 ###possbily use $DB as a global variable for multiple files
 
+
+create_category_table = <<-SQL
+  CREATE TABLE IF NOT EXISTS category(
+    id INTEGER PRIMARY KEY,
+    name VARCHAR(255)
+  )
+SQL
+### Ask people to enter items in the order you usually go through the store
+db.execute(create_category_table)
+
+create_item_table = <<-SQL
+  CREATE TABLE IF NOT EXISTS category(
+    id INTEGER PRIMARY KEY,
+    name VARCHAR(255),
+    quantity INT
+  )
+SQL
+db.execute(create_item_table)
+
+#Link necessary files
+#Create two tables
+
+
+
+
+
 #Add additional items after the first round
   #input the list, new category, item and optional quantity
   #store in list
