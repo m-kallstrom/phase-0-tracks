@@ -2,7 +2,12 @@
 ####Here is the code from the category list maker. I would like it to write to a table or two, and be able to save, retrieve, delete, and print tables.
 require 'sqlite3'
 require 'twilio-ruby'
-require_relative 'sms'
+
+#Auth stuff for text messages:
+client = Twilio::REST::Client.new(
+  ENV['AC77a8176b43f4ea62f3a5da4e4753ca1a'],
+  ENV['71a42cf85828237e76b4531103039e81']
+)
 
 #Link necessary files
 #Create two tables for categories and items
@@ -94,7 +99,6 @@ def pretty_list
 items_list_from_db = $DB.execute("SELECT category.name, items.name, items.quantity FROM category INNER JOIN items ON items.category_name = category.id")
 list = {}
 items_list_from_db.each do |hash|
-    p hash
     if list.include?(hash[0])
      list[hash[0]][hash[1]] = hash[2]
     else
@@ -230,7 +234,7 @@ write_to_file(pretty_list)
 
 puts "Text a copy of this list to yourself or some unsuspecting victim:"
 
-
+send_text_message(pretty_list)
 
 #(STRETCH GOAL) have the ability to reuse this template or make a new one.
   #In which case it would
