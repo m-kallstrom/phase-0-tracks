@@ -14,6 +14,7 @@ require 'faker'
 def make_or_resuse_a_db(database)
   database += ".db"
   $DB = SQLite3::Database.new(database)
+  $DB.results_as_hash = true
 end
 
 #Create the tables for category and items
@@ -55,6 +56,12 @@ def add_update_item(category, name, quantity=1)
   $DB.execute("INSERT INTO items (name, quantity, category_name) VALUES (?, ?, ?)", [name, quantity, category])
 end
 
+#Look up category number for adding an item
+
+def look_up_category_id(input_name)
+
+end
+
 
 #delete an item
   #ask the user for the item they want to delete
@@ -69,7 +76,11 @@ end
   #List numerically by category and then alphabetically by item
   #Upcase the categories
   #downcase the items
+
 def pretty_list
+
+ items_hash = $DB.execute("SELECT category.name, items.name, items.quantity FROM items INNER JOIN category ON items.category_name = category.id")
+ items_hash = items_hash.map {|item, quantity| puts "#{item} is item and quantity is #{quantity}"}
 
 end
 
@@ -80,10 +91,13 @@ make_or_resuse_a_db("grocery_list")
 $DB.execute(create_category_table)
 $DB.execute(create_item_table)
 add_categories("Fruit and Veg")
+add_categories("Bakery")
+add_categories("Cereals")
 add_categories("Dairy")
 add_update_item(1, "carrots", 5)
 add_update_item(2, "milk", 1)
 delete_item("carrots")
+#p pretty_list
 
 #List set up
   #Ask user for a list of categories in order of how they go around the grocery store
@@ -97,6 +111,26 @@ delete_item("carrots")
         #Delete from old place and insert into new place
     #Repeat until user is happy
     #Iterate through the list to add each to the SQL table
+
+puts "Hello! Please type a name for a new or existing list:"
+puts "(Type carefully because it will create a new list entirely if it's off.)"
+list_name = gets.chomp.downcase
+make_or_resuse_a_db(list_name)
+
+puts "Okay! Let's add some categories to this list. Add them in the order you normally shop through for easiest use:"
+input_category = gets.chomp.downcase
+category_list = []
+loop do
+  break if input_category == "done"
+  category_list << input_category
+  p category_list
+  puts "How's this?"
+  input_category = gets.chomp.downcase
+end
+
+category_list.each {|category| add_categories(category)}
+
+
 
 #(STRETCH GOAL) have the ability to reuse this template or make a new one.
   #In which case it would
