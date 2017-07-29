@@ -6,24 +6,27 @@ require 'faker'
 
 db = SQLite3::Database.new("grocery_list.db")
 
-
-create_category_table = <<-SQL
+def create_category_table
+category_table = <<-SQL
   CREATE TABLE IF NOT EXISTS category(
     id INTEGER PRIMARY KEY,
     name VARCHAR(255)
   )
 SQL
+end
 ### Ask people to enter items in the order you usually go through the store
 
-create_item_table = <<-SQL
-  CREATE TABLE IF NOT EXISTS items(
-    id INTEGER PRIMARY KEY,
-    name VARCHAR(255),
-    quantity INTEGER,
-    category_name VARCHAR(255),
-    FOREIGN KEY (category_name) REFERENCES category(id)
-  )
-SQL
+def create_item_table
+  item_table = <<-SQL
+    CREATE TABLE IF NOT EXISTS items(
+      id INTEGER PRIMARY KEY,
+      name VARCHAR(255),
+      quantity INTEGER,
+      category_name VARCHAR(255),
+      FOREIGN KEY (category_name) REFERENCES category(id)
+    )
+  SQL
+end
 
 
 #Link necessary files
@@ -60,13 +63,13 @@ SQL
   #If it doesn't exist, create it
   #If it does exist, ask if they want to pull it up or overwrite the items
 def add_categories(db, category)
-
+  db.execute("INSERT INTO category (name) VALUES (?)", [category])
 
 end
 
 def add_update_item(db, category, name, quantity=1)
 
-  db.execute("INSERT INTO items (name, quantity, category) VALUES (?, ?, ?)", [name, quantity, category])
+  db.execute("INSERT INTO items (name, quantity, category_name) VALUES (?, ?, ?)", [name, quantity, category])
 end
 
 #delete an item
@@ -81,7 +84,10 @@ end
 
 db.execute(create_category_table)
 db.execute(create_item_table)
-
+add_categories(db, "Fruit and Veg")
+add_categories(db, "Dairy")
+add_update_item(db, 1, "carrots", 5)
+add_update_item(db, 2, "milk", 1)
 
 
 
