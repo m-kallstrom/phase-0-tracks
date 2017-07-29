@@ -1,5 +1,9 @@
 
 ####Here is the code from the category list maker. I would like it to write to a table or two, and be able to save, retrieve, delete, and print tables.
+
+# METHOD DECLARATIONS
+
+#Link some stuff:
 require 'sqlite3'
 require 'twilio-ruby'
 
@@ -9,10 +13,6 @@ client = Twilio::REST::Client.new(
   ENV['71a42cf85828237e76b4531103039e81']
 )
 
-#Link necessary files
-#Create two tables for categories and items
-  #Category has id and category name
-  #Item has id, item name, quantity, and foreign key to category
 
 #Name your database or load an old one
   #IF it doesn't exist, create it
@@ -20,7 +20,6 @@ client = Twilio::REST::Client.new(
   #Need some security measures in here!
 def make_or_resuse_a_db(database)
   database += ".db"
- # $DB = SQLite3::Database.new("grocery_list.db")
   $DB = SQLite3::Database.new(database)
   $DB.results_as_hash = true
 end
@@ -90,6 +89,15 @@ def delete_item(name)
 end
 
 
+#Dangerous option!
+  #clear all the data from the items table
+  #Useful for using a db as a template
+  #DANGER WILL ROBINSON!
+def delete_all_items_from_item_table!
+  $DB.execute("DELETE * FROM items")
+end
+
+
 #Make a user friendly list:
   #Pull the data from the database
   #List numerically by category and then alphabetically by item
@@ -115,16 +123,32 @@ items_list_from_db.each do |hash|
   end
 end
 
+
+#Print out a human-friendly list of the categories to show when adding categories later on
+  #create an empty string for the list
+  #grab the category names from the database
+  #stuff each category name into the string
+  #return the string
+def pretty_category_list
+  category_list = ""
+  items_list_from_db = $DB.execute("SELECT category.name FROM category")
+  items_list_from_db.each do |hash|
+    category_list += hash[0]
+  end
+  category_list
+end
+
+
 #Write the list to file for printing
   #take in the list
-
 def write_to_file(list)
   somefile = File.open("sample.txt", "w")
   somefile.puts list
   somefile.close
 end
 
-#BETA
+
+#BETA!
 #Send the list via text message
   #RIGHT NOW CAN ONLY TEXT ME
   #BUT
@@ -138,30 +162,12 @@ def send_text_message(list)
 )
 end
 
+
 #DRIVER CODE
-#greet user, ask for a list of categories in the general order in which they shop:
-# make_or_resuse_a_db("grocery_list")
-# $DB.execute(create_category_table)
-# $DB.execute(create_item_table)
-# add_categories("Fruit and Veg")
-# add_categories("Bakery")
-# add_categories("Cereals")
-# add_categories("Dairy")
-# add_update_item(1, "apples", 2)
-# add_update_item(2, "yogurt", 4)
-# delete_item("carrots")
-# pretty_list
-
-#p look_up_category_id("dairy")
-
-
-
-
 
 #List set up
-  #Ask the user if the list is new or not
-    #IF it's new, make a new list
-    #ELSE try to load the old list and hope they can type
+  #Ask the user for the name of the list.
+  #Hope they can type it correctly. They've been warned.
 puts "Hello! If you want to make a new list, please choose a name. If you'd like to load a list, type the name of the file without the extension, like this:"
 puts "grocery_list"
 puts "(Type carefully because it will create a new list entirely if it's off. No pressure or anything.)"
@@ -263,6 +269,7 @@ until desired_function == "done"
         #take it off the list
         #ask for the next
       #ELSE
+        #DANGER!
         #make sure they're sure
         #delete all the content from the items table
       #start them back at the beginning if they have invalid input to prevent catastrophic data loss
@@ -271,15 +278,16 @@ until desired_function == "done"
         dangerous = gets.chomp.downcase
         if dangerous == "one"
           pretty_list
-          puts "Enter the item to delete:"
+          puts "Enter the name of the item to delete:"
           delete_single_item = gets.chomp.downcase
-          #Is there a method for this??
+          delete_item(delete_single_item)
+          pretty_list
         elsif dangerous == "all"
           pretty_list
           puts "Whoa. You sure you want to clear the entire list? I can't save you if you do this. Type 'yes' to destroy all the things or 'no' to go back to the update menu"
           sureness = gets.chomp.downcase
           if sureness == "yes"
-            #delte * command
+          delete_all_items_from_item_table!
           elsif sureness == "no"
             puts "Glad I talked you back from the edge there."
           else
@@ -287,7 +295,7 @@ until desired_function == "done"
           end
         else
           "Dunno what you just typed. Try again."
-
+        end
 
     #Ask user what category to add
       #Print a list of the categories, and tell them they only show up on the list if they have an item in them.
@@ -295,7 +303,16 @@ until desired_function == "done"
       #Tell them it'll default to the end and they're stuck with that in this version
       #Add the new category to the table
     when desired_function.include?("category")
-
+      puts "A category doesn't show on the usual list until an item is added to it. These are your current categories:"
+      #category print
+      puts "Enter a category to add or type 'done' to go back to the menu."
+      input_add_category = gets.chomp.downcase
+      until input_add_category == 'done'
+        add_categories(input_add_category)
+        #category print
+        puts "Enter a category to add or type 'done' to go back to the menu"
+        input_add_category = gets.chomp.downcase
+      end
     else
       puts "I'm sorry. Type 'add item', 'update quantity' or 'add category'. If you'd like to continue to the next step, type 'done'"
       desired_function = gets.chomp.downcase
@@ -303,14 +320,14 @@ until desired_function == "done"
 end
 
 
-#print a physical list for those kinds of people who walk into a bookstore and wax poetic about 'holding a book and turning the pages'
+#print a physical list for those kinds of people who walk into a bookstore and wax poetic about 'holding a book and turning the pages':
 
 puts "Save your file so you can print it and access it later:"
 #Something to get a filename?
 write_to_file(pretty_list)
 
 
-#text a copy to those who are more practical, forgetful, or eco-conscious
+#text a copy to those who are more practical, forgetful, or eco-conscious:
 puts "Text a copy of this list to yourself or some unsuspecting victim:"
 #This would ask the user for their phone number if I didn't have a trial version of this API
 send_text_message(pretty_list)
