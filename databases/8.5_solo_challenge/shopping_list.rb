@@ -76,6 +76,9 @@ end
   #ask the user for the item they want to delete
   #remove the item from the table with a SQL command
 
+def delete_item(db, name)
+  db.execute("DELETE FROM items WHERE name=? LIMIT 1", [name])
+end
 
 
 
@@ -88,6 +91,7 @@ add_categories(db, "Fruit and Veg")
 add_categories(db, "Dairy")
 add_update_item(db, 1, "carrots", 5)
 add_update_item(db, 2, "milk", 1)
+delete_item(db, "carrots")
 
 
 
