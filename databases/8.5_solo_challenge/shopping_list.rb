@@ -199,7 +199,7 @@ category_list = []
         #Delete from old place and insert into new place
     #Repeat until user is happy
 puts "Great! Does the order on this look good to you?"
-puts category_list.each_with_index {|category, index| puts "#{index}: #{category}"
+category_list.each_with_index {|category, index| puts "#{index}: #{category}" }
 puts "If you want to move an item, type the number. Otherwise, enter 'done':"
 input_number = gets.chomp
 
@@ -208,7 +208,8 @@ input_number = gets.chomp
     puts "What number should it be at?"
     input_number = gets.chomp
     new_index = input_number.to_i
-
+    category_list.insert(new_index, category_list.delete_at(index))
+    category_list.each_with_index {|category, index| puts "#{index}: #{category}" }
     puts "How's this? Type 'done' to continue or select another number to change:"
     input_number = gets.chomp
   end
@@ -241,7 +242,7 @@ until desired_function == "done"
           until input_item == "done"
             item_array = input_item.split(" ")
            #This has to call the category number fuction!!!!!
-           add_update_item(item_array[0], item_array[1], *item_array[2])
+           add_item(item_array[0], item_array[1], *item_array[2])
            pretty_list
            puts "Type the next item or 'done' to move on:"
            input_item = gets.chomp.downcase
