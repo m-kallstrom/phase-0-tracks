@@ -17,16 +17,34 @@ SQL
 db.execute(create_category_table)
 
 create_item_table = <<-SQL
-  CREATE TABLE IF NOT EXISTS category(
+  CREATE TABLE IF NOT EXISTS item(
     id INTEGER PRIMARY KEY,
     name VARCHAR(255),
-    quantity INT
+    quantity INT,
+    category_name VARCHAR(255)
+    FOREIGN KEY category_name REFERENCES category(id)
   )
 SQL
 db.execute(create_item_table)
 
 #Link necessary files
-#Create two tables
+#Create two tables for categories and items
+  #Category has id and category name
+  #Item has id, item name, quantity, and foreign key to category
+
+#List set up
+  #Ask user for a list of categories in order of how they go around the grocery store
+    #UNTIL the user types "done"
+      #ask for the category
+      #show the updated list (with index)
+    #Next, show the finished list and ask if everything is in the correct order
+      #IF yes, go on to the next step
+      #ELSE
+        #Ask the user which number is wrong and what number it should be
+        #Delete from old place and insert into new place
+    #Repeat until user is happy
+
+ #Add items
 
 
 
