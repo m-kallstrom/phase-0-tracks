@@ -140,17 +140,18 @@ end
 
 
 #Write the list to file for printing
-  #take in the list
-def write_to_file(list)
-  somefile = File.open("sample.txt", "w")
-  somefile.puts list
-  somefile.close
+  #take in the list and the filename
+def write_to_file(list, file_name)
+  file_name += ".txt"
+  user_file = File.open(file_name, "w")
+  user_file.puts list
+  user_file.close
 end
 
 
 #BETA!
 #Send the list via text message
-  #RIGHT NOW CAN ONLY TEXT ME
+  #RIGHT NOW IT CAN ONLY TEXT ME
   #BUT
   #If this were a real thing, have the user provide their phone number
   #send list via text
@@ -304,12 +305,12 @@ until desired_function == "done"
       #Add the new category to the table
     when desired_function.include?("category")
       puts "A category doesn't show on the usual list until an item is added to it. These are your current categories:"
-      #category print
+      p pretty_category_list
       puts "Enter a category to add or type 'done' to go back to the menu."
       input_add_category = gets.chomp.downcase
       until input_add_category == 'done'
         add_categories(input_add_category)
-        #category print
+        p pretty_category_list
         puts "Enter a category to add or type 'done' to go back to the menu"
         input_add_category = gets.chomp.downcase
       end
@@ -323,8 +324,9 @@ end
 #print a physical list for those kinds of people who walk into a bookstore and wax poetic about 'holding a book and turning the pages':
 
 puts "Save your file so you can print it and access it later:"
-#Something to get a filename?
-write_to_file(pretty_list)
+puts "Please name your file. This will create a few file or overwrite an old file of the same name."
+file_name = gets.chomp.downcase
+write_to_file(pretty_list, file_name)
 
 
 #text a copy to those who are more practical, forgetful, or eco-conscious:
