@@ -68,8 +68,8 @@ end
 
 
 #update an item name/quantity already in the list
-def update_item(category_number, name, quantity=1)
-  $DB.execute("UPDATE items SET name =?, quantity =? WHERE category_name=?;", [name, quantity, category_number])
+def update_item(name, quantity=1)
+  $DB.execute("UPDATE items SET name =?, quantity =? WHERE name=?;", [name, quantity, name])
 end
 
 
@@ -115,12 +115,21 @@ items_list_from_db.each do |hash|
   end
 end
 
+#Write the list to file for printing
+  #take in the list
+
 def write_to_file(list)
   somefile = File.open("sample.txt", "w")
   somefile.puts list
   somefile.close
 end
 
+#BETA
+#Send the list via text message
+  #RIGHT NOW CAN ONLY TEXT ME
+  #BUT
+  #If this were a real thing, have the user provide their phone number
+  #send list via text
 def send_text_message(list)
   client.messages.create(
   from: "+19149964976",
@@ -150,23 +159,21 @@ end
 
 
 #List set up
-  #Ask user for a list of categories in order of how they go around the grocery store
+  #Ask the user if the list is new or not
+    #IF it's new, make a new list
+    #ELSE try to load the old list and hope they can type
+puts "Hello! If you want to make a new list, please choose a name. If you'd like to load a list, type the name of the file without the extension, like this:"
+puts "grocery_list"
+puts "(Type carefully because it will create a new list entirely if it's off. No pressure or anything.)"
+    list_name = gets.chomp.downcase
+    make_or_resuse_a_db(list_name)
+
+
+ #Ask user for a list of categories in order of how they go around the grocery store
     #UNTIL the user types "done"
       #ask for the category
       #show the updated list (with index)
-    #Next, show the finished list and ask if everything is in the correct order
-      #IF yes, go on to the next step
-      #ELSE
-        #Ask the user which number is wrong and what number it should be
-        #Delete from old place and insert into new place
-    #Repeat until user is happy
-    #Iterate through the list to add each to the SQL table
-puts "Hello! Please type a name for a new or existing list:"
-puts "(Type carefully because it will create a new list entirely if it's off.)"
-list_name = gets.chomp.downcase
-make_or_resuse_a_db(list_name)
-
-puts "Okay! Let's add some categories to this list. Add them in the order you normally shop through the store for easiest use. Type 'done' when you're ready:"
+puts "Okay! Let's add some categories to this list. Add them in the order you normally shop through the store for easiest use. Type 'done' when you're ready to move on:"
 input_category = gets.chomp.downcase
 category_list = []
 
@@ -177,7 +184,13 @@ category_list = []
     input_category = gets.chomp.downcase
   end
 
-#### Pull this stuff out into a method
+
+    #Next, show the finished list and ask if everything is in the correct order
+      #IF yes, go on to the next step
+      #ELSE
+        #Ask the user which number is wrong and what number it should be
+        #Delete from old place and insert into new place
+    #Repeat until user is happy
 puts "Great! Does the order on this look good to you?"
 puts category_list.each_with_index {|category, index| puts "#{index}: #{category}"
 puts "If you want to move an item, type the number. Otherwise, enter 'done':"
@@ -193,169 +206,114 @@ input_number = gets.chomp
     input_number = gets.chomp
   end
 
-#Add the corrected category list into the database
+#Iterate through the list to add each category to the category table
 category_list.each {|category| add_categories(category)}
 
 
-#Ask the user to add items one by one
-  #Loop UNTIL they type 'done'
-  #add each item to the table
-  #maybe print the table each time
-puts "Moving right along. Now we've got our categories, let's add some things to them! Put in items by category, the item name and then the quantity (optional)"
-puts "Like this:  frozen pizza 3"
-input_item = gets.chomp.downcase
+#Allow the user to choose between several list-changing options
+#They can:
+  #Add a new item
+  #Update the quantity of an item
+  #Delete one item or the whole shebang
+  #Add a category
+puts "What would you like to do?"
+puts "Enter 'add item', 'update quantity', or 'add category', 'delete items'"
+puts "To exit, type 'done'"
+desired_function = gets.chomp.downcase
 
-until input_item == "done"
-  item_array = input_item.split(" ")
-  add_update_item(item_array[0], item_array[1], *item_array[2])
-  pretty_list
-  puts "Type the next item or 'done' to move on:"
-  input_item = gets.chomp.downcase
+until desired_function == "done"
+  case
+    #Ask the user to add items one by one
+      #Loop UNTIL they type 'done'
+      #add each item to the table
+      #print the updated table each time
+    when desired_function.include?("item")
+      puts "Add items by category, item name and then the quantity (optional)"
+      puts "Like this:  frozen pizza 3"
+      input_item = gets.chomp.downcase
+          until input_item == "done"
+            item_array = input_item.split(" ")
+           #This has to call the category number fuction!!!!!
+           add_update_item(item_array[0], item_array[1], *item_array[2])
+           pretty_list
+           puts "Type the next item or 'done' to move on:"
+           input_item = gets.chomp.downcase
+          end
+
+
+    #Ask the user what item to update and its new quantity
+      #Loop UNTIL they type 'done'
+      #update each item in the table
+      #print the table for them to look at
+    when desired_function.include?("quantity")
+      pretty_list
+      puts "Okay. You know the drill now. Category, item name, quantity:"
+      updated_item = gets.chomp.downcase
+        until updated_item == "done"
+          item_array = updated_item.split(" ")
+          update_item(item_array[1], *item_array[2])
+          pretty_list
+          puts "Type the next item to update or 'done' to move on:"
+          updated_item = gets.chomp.downcase
+        end
+
+    #Ask the user if they want to delete one or all items
+      #IF one:
+        #get the item name to delete
+        #take it off the list
+        #ask for the next
+      #ELSE
+        #make sure they're sure
+        #delete all the content from the items table
+      #start them back at the beginning if they have invalid input to prevent catastrophic data loss
+    when desired_function.include?("delete")
+      puts "I see you live dangerously. Would you like to delete items individually or kill them all? Type 'one' or 'all':"
+        dangerous = gets.chomp.downcase
+        if dangerous == "one"
+          pretty_list
+          puts "Enter the item to delete:"
+          delete_single_item = gets.chomp.downcase
+          #Is there a method for this??
+        elsif dangerous == "all"
+          pretty_list
+          puts "Whoa. You sure you want to clear the entire list? I can't save you if you do this. Type 'yes' to destroy all the things or 'no' to go back to the update menu"
+          sureness = gets.chomp.downcase
+          if sureness == "yes"
+            #delte * command
+          elsif sureness == "no"
+            puts "Glad I talked you back from the edge there."
+          else
+            puts "Was that a yes or no? Try again."
+          end
+        else
+          "Dunno what you just typed. Try again."
+
+
+    #Ask user what category to add
+      #Print a list of the categories, and tell them they only show up on the list if they have an item in them.
+      #Check that it's not on the list
+      #Tell them it'll default to the end and they're stuck with that in this version
+      #Add the new category to the table
+    when desired_function.include?("category")
+
+    else
+      puts "I'm sorry. Type 'add item', 'update quantity' or 'add category'. If you'd like to continue to the next step, type 'done'"
+      desired_function = gets.chomp.downcase
+  end
 end
 
-pretty_list
-puts "How's this look?"
-puts "Type 'update' to update the quantity of the item."
-input_change_table = gets.chomp.downcase
 
-#put in a loop here for changing
-puts "Okay. You know the drill now. Category, item name, quantity:"
-updated_item = gets.chomp
-
-#Streamline an add/update feature, where you select one and then loop until done, and go back to the add/update loop. Maybe have options for adding a new category or updating the name of something. That's a bit stretch though.
-
-#here I would like the option to print the list physically, or maybe text it to yourself. IDK.
-  #print a physical list for those kinds of people who walk into a bookstore and wax poetic about 'holding a book and turning the pages'
-  #text a copy to those who are more practical, forgetful, or eco-conscious
+#print a physical list for those kinds of people who walk into a bookstore and wax poetic about 'holding a book and turning the pages'
 
 puts "Save your file so you can print it and access it later:"
-
+#Something to get a filename?
 write_to_file(pretty_list)
 
-puts "Text a copy of this list to yourself or some unsuspecting victim:"
 
+#text a copy to those who are more practical, forgetful, or eco-conscious
+puts "Text a copy of this list to yourself or some unsuspecting victim:"
+#This would ask the user for their phone number if I didn't have a trial version of this API
 send_text_message(pretty_list)
 
-#(STRETCH GOAL) have the ability to reuse this template or make a new one.
-  #In which case it would
-  #drop the content from the items table
-  #jump right to adding items in the driver code
-
-
-
-
-=begin
-#Add additional items after the first round
-  #input the list, new category, item and optional quantity
-  #store in list
-
-def grocery_list_maker(list, category, item, quantity=1)
-  if list.include?(category)
-    list[category][item] = quantity
-  else
-  item_and_quantity = {}
-  item_and_quantity.store(item, quantity)
-  list.store(category, item_and_quantity)
-end
-  list
-end
-
-#Update list method
-  #take in the original list hash
-  #take in the new category, item and quantity
-  #use the category to look up the key and push the new value
-  #output the updated hash
-
-def update_grocery_list_quantity(list, category, item, quantity)
-    list[category][item] = quantity
-    list
-end
-
-#Delete item method:
-  #take in original list hash,
-  #take in category and item to be deleted
-  #use hash key to look up item and delete it
-  #output the updated hash
-  def delete_item_grocery_list(list, category, item)
-    list[category].delete(item)
-    list
-end
-
-#Hash beautifier
-  #take in original hash
-  #use interpolation to make a pretty list
-  #output pretty list
-
-def grocery_list_beautifier(list)
-  list.sort
-  list.each do |key, values|
-    puts "Category: #{key.capitalize}"
-    values.each do |item, quantity|
-      puts "#{item.capitalize}: #{quantity}"
-    end
-  end
-end
-
-
-#DRIVER CODE
-
-puts "Hello!"
-puts "Please add an item with no commas in the following order:"
-puts "category item quantity(optional)"
-input = gets.chomp
-new_list = {}
-until input == "done"
-  input = input.split(" ")
-  grocery_list_maker(new_list, input[0], input[1], *input[2])
-  puts "Next item. Type 'done' when finished:"
-  input = gets.chomp
-end
-
-p grocery_list_beautifier(new_list)
-
-puts "Does this list look good?"
-puts "Please enter 'add', 'update', or 'delete' to change items and quantities. Otherwise, type 'done' to exit."
-input = gets.chomp
-
-
-#####Case statements? See teacher feedback about loops. Actually, check all the feedback.
-
-
-until input.downcase == "done"
-  if input.downcase.include?("add")
-    puts "Please enter the category and the item you want to add. Quantity is optional:"
-    input = gets.chomp.split(" ")
-    updated_list = grocery_list_maker(new_list, input[0], input[1], *input[2])
-
-  elsif input.downcase.include?("update")
-    puts "Please enter the category and the item you want to update and the new quantity:"
-    input = gets.chomp.split(" ")
-    updated_list = update_grocery_list_quantity(new_list, input[0], input[1], input[2])
-
-  elsif input.downcase.include?("delete")
-    puts "Please enter the category and the item you want to delete:"
-    input = gets.chomp.split(" ")
-    updated_list = delete_item_grocery_list(new_list, input[0], input[1])
-
-  else
-    puts "Sorry. Try that one more time."
-    puts "Type 'add', 'update' or 'delete' if you want to change an item Type 'done' to exit."
-    input = gets.chomp
-  end
-
- puts "Here you go:"
- grocery_list_beautifier(updated_list)
- puts "Anything else to change? Please enter 'add', 'update' or 'delete' to fix an item, and 'done' to exit."
- input = gets.chomp
-end
-
-puts "Enjoy your shopping trip!"
-
-
-###Use classes and separate files?
-##overwrite puts with def to_s
-
-=end
-
-
+puts "Happy shopping!"
 
