@@ -1,10 +1,11 @@
 
-####Here is the code from the category list maker. I would like it to write to a table or two, and be able to save, retrieve, delete, and print tables.
+# Cat test_data.txt | ruby shopping_list.rb
 
 # METHOD DECLARATIONS
 
 #Link some stuff:
 require 'sqlite3'
+require 'hirb'
 require 'twilio-ruby'
 
 #Auth stuff for text messages:
@@ -16,8 +17,7 @@ client = Twilio::REST::Client.new(
 
 #Name your database or load an old one
   #IF it doesn't exist, create it
-  #IF it does exist, ask if they want to pull it up or overwrite the items
-  #Need some security measures in here!
+  #IF it does exist, pull it up
 def make_or_resuse_a_db(database)
   database += ".db"
   $DB = SQLite3::Database.new(database)
@@ -53,6 +53,14 @@ def add_categories(category)
   $DB.execute("INSERT INTO category (name) VALUES (?)", [category])
 end
 
+def category_string_pre_check(category_string)
+category_string.each_with_index {|category, index| puts "#{index}: #{category}" }
+end
+
+def parse_text(input)
+  input_array = input.split(",")
+end
+
 #Add/Update items
   #Ask user to enter items one at a time, with optional quantity
   #IF the item is already in the list
@@ -60,8 +68,7 @@ end
   #Assuming it's new,
     #Execute a SQL command to stuff that into the items table
 def add_item(category_number, name, quantity=1)
- return false if $DB.execute("SELECT EXISTS(SELECT 1 FROM items WHERE name=? LIMIT 1)", [name]) == 1
-  # ^^ returns 1 for yes and 0 for no
+ return false if $DB.execute("SELECT EXISTS(SELECT 1 FROM items WHERE name=? LIMIT 1)", [name]) == 1 # <- returns 1 for yes and 0 for no
   $DB.execute("INSERT INTO items (name, quantity, category_name) VALUES (?, ?, ?)", [name, quantity, category_number])
 end
 
@@ -94,7 +101,7 @@ end
   #Useful for using a db as a template
   #DANGER WILL ROBINSON!
 def delete_all_items_from_item_table!
-  $DB.execute("DELETE * FROM items")
+  $DB.execute("DELETE FROM items")
 end
 
 
@@ -134,6 +141,7 @@ def pretty_category_list
   items_list_from_db = $DB.execute("SELECT category.name FROM category")
   items_list_from_db.each do |hash|
     category_list += hash[0]
+    category_list += ", "
   end
   category_list
 end
@@ -144,7 +152,8 @@ end
 def write_to_file(list, file_name)
   file_name += ".txt"
   user_file = File.open(file_name, "w")
-  user_file.puts list
+  user_file.puts Hirb::Helpers::AutoTable.render(list)
+  #user_file.puts list
   user_file.close
 end
 
@@ -176,6 +185,8 @@ puts "(Type carefully because it will create a new list entirely if it's off. No
     make_or_resuse_a_db(list_name)
 
 
+$DB.execute(create_category_table)
+$DB.execute(create_item_table)
  #Ask user for a list of categories in order of how they go around the grocery store
     #UNTIL the user types "done"
       #ask for the category
@@ -190,7 +201,7 @@ category_list = []
     puts "Add another or type 'done':"
     input_category = gets.chomp.downcase
   end
-
+  ####CURRENTLY OVERWRITES INSTEAD OF REJECTING
 
     #Next, show the finished list and ask if everything is in the correct order
       #IF yes, go on to the next step
@@ -199,7 +210,7 @@ category_list = []
         #Delete from old place and insert into new place
     #Repeat until user is happy
 puts "Great! Does the order on this look good to you?"
-category_list.each_with_index {|category, index| puts "#{index}: #{category}" }
+category_string_pre_check(category_list)
 puts "If you want to move an item, type the number. Otherwise, enter 'done':"
 input_number = gets.chomp
 
@@ -209,7 +220,7 @@ input_number = gets.chomp
     input_number = gets.chomp
     new_index = input_number.to_i
     category_list.insert(new_index, category_list.delete_at(index))
-    category_list.each_with_index {|category, index| puts "#{index}: #{category}" }
+    category_string_pre_check(category_list)
     puts "How's this? Type 'done' to continue or select another number to change:"
     input_number = gets.chomp
   end
@@ -225,27 +236,29 @@ category_list.each {|category| add_categories(category)}
   #Delete one item or the whole shebang
   #Add a category
 puts "What would you like to do?"
-puts "Enter 'add item', 'update quantity', or 'add category', 'delete items'"
-puts "To exit, type 'done'"
+puts "Enter 'add item', 'update quantity', 'add category', or 'delete options'"
+puts "To continue to the next step, type 'done'"
 desired_function = gets.chomp.downcase
 
 until desired_function == "done"
   case
+
     #Ask the user to add items one by one
+      #POSSIBLY ASK FOR EACH PIECE INDIVIDUALLY? or to use quotes?
       #Loop UNTIL they type 'done'
       #add each item to the table
       #print the updated table each time
-    when desired_function.include?("item")
-      puts "Add items by category, item name and then the quantity (optional)"
-      puts "Like this:  frozen pizza 3"
+    when desired_function.include?("add") ##THIS NEEDS FIXING
+      puts "Add items separated by commas in order of: category, item name and then the quantity (optional)"
+      puts "Like this:  frozen, pizza, 3"
       input_item = gets.chomp.downcase
           until input_item == "done"
-            item_array = input_item.split(" ")
-           #This has to call the category number fuction!!!!!
-           add_item(item_array[0], item_array[1], *item_array[2])
-           pretty_list
-           puts "Type the next item or 'done' to move on:"
-           input_item = gets.chomp.downcase
+            item_array = parse_text(input_item)
+            category_id = look_up_category_id(item_array[0])
+            add_item(category_id, item_array[1], *item_array[2])
+            pretty_list
+            puts "Type the next item or 'done' to move on:"
+            input_item = gets.chomp.downcase
           end
 
 
@@ -255,15 +268,16 @@ until desired_function == "done"
       #print the table for them to look at
     when desired_function.include?("quantity")
       pretty_list
-      puts "Okay. You know the drill now. Category, item name, quantity:"
+      puts "Okay. You know the drill by now. Category, item name, quantity:"
       updated_item = gets.chomp.downcase
         until updated_item == "done"
-          item_array = updated_item.split(" ")
+          item_array = parse_text(updated_item)
           update_item(item_array[1], *item_array[2])
           pretty_list
           puts "Type the next item to update or 'done' to move on:"
           updated_item = gets.chomp.downcase
         end
+
 
     #Ask the user if they want to delete one or all items
       #IF one:
@@ -281,6 +295,7 @@ until desired_function == "done"
         if dangerous == "one"
           pretty_list
           puts "Enter the name of the item to delete:"
+          #NOT WORKING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
           delete_single_item = gets.chomp.downcase
           delete_item(delete_single_item)
           pretty_list
@@ -289,6 +304,7 @@ until desired_function == "done"
           puts "Whoa. You sure you want to clear the entire list? I can't save you if you do this. Type 'yes' to destroy all the things or 'no' to go back to the update menu"
           sureness = gets.chomp.downcase
           if sureness == "yes"
+            #BREAKS ALL THE THINGS
           delete_all_items_from_item_table!
           elsif sureness == "no"
             puts "Glad I talked you back from the edge there."
@@ -298,6 +314,7 @@ until desired_function == "done"
         else
           "Dunno what you just typed. Try again."
         end
+
 
     #Ask user what category to add
       #Print a list of the categories, and tell them they only show up on the list if they have an item in them.
@@ -315,10 +332,16 @@ until desired_function == "done"
         puts "Enter a category to add or type 'done' to go back to the menu"
         input_add_category = gets.chomp.downcase
       end
+
+
+    #Catch-all for invalid input:
     else
-      puts "I'm sorry. Type 'add item', 'update quantity' or 'add category'. If you'd like to continue to the next step, type 'done'"
-      desired_function = gets.chomp.downcase
+      puts "I'm sorry. That's some invalid text you've got there."
   end
+  puts "What would you like to do?"
+  puts "Enter 'add item', 'update quantity', 'add category' or 'delete options'"
+  puts "To exit, type 'done'"
+  desired_function = gets.chomp.downcase
 end
 
 
@@ -331,9 +354,19 @@ write_to_file(pretty_list, file_name)
 
 
 #text a copy to those who are more practical, forgetful, or eco-conscious:
-puts "Text a copy of this list to yourself or some unsuspecting victim:"
+#puts "Text a copy of this list to yourself or some unsuspecting victim:"
 #This would ask the user for their phone number if I didn't have a trial version of this API
-send_text_message(pretty_list)
+#send_text_message(pretty_list)
+
 
 puts "Happy shopping!"
 
+def sanitize(filename)
+  # Bad as defined by wikipedia: https://en.wikipedia.org/wiki/Filename#Reserved_characters_and_words
+  # Also have to escape the backslash
+  bad_chars = [ '/', '\\', '?', '%', '*', ':', '|', '"', '<', '>', '.', ' ' ]
+  bad_chars.each do |bad_char|
+    filename.gsub!(bad_char, '_')
+  end
+  filename
+end
