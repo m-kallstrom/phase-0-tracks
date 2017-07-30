@@ -6,7 +6,6 @@
 #Link some stuff:
 require 'sqlite3'
 require 'hirb'
-require 'twilio-ruby'
 
 
 #Name your database or load an old one
@@ -33,7 +32,7 @@ def create_item_table
   item_table = <<-SQL
     CREATE TABLE IF NOT EXISTS items(
       id INTEGER PRIMARY KEY,
-      name VARCHAR(255),
+      item_name VARCHAR(255),
       quantity INTEGER,
       category_name VARCHAR(255),
       FOREIGN KEY (category_name) REFERENCES category(id)
@@ -62,14 +61,14 @@ end
   #Assuming it's new,
     #Execute a SQL command to stuff that into the items table
 def add_item(category_number, name, quantity=1)
- return false if $DB.execute("SELECT EXISTS(SELECT 1 FROM items WHERE name=? LIMIT 1)", [name]) == 1 # <- returns 1 for yes and 0 for no
-  $DB.execute("INSERT INTO items (name, quantity, category_name) VALUES (?, ?, ?)", [name, quantity, category_number])
+ return false if $DB.execute("SELECT EXISTS(SELECT 1 FROM items WHERE item_name=? LIMIT 1)", [name]) == 1 # <- returns 1 for yes and 0 for no
+  $DB.execute("INSERT INTO items (item_name, quantity, category_name) VALUES (?, ?, ?)", [name, quantity, category_number])
 end
 
 
 #update an item name/quantity already in the list
 def update_item(name, quantity=1)
-  $DB.execute("UPDATE items SET name =?, quantity =? WHERE name=?;", [name, quantity, name])
+  $DB.execute("UPDATE items SET item_name =?, quantity =? WHERE item_name=?;", [name, quantity, name])
 end
 
 
@@ -82,11 +81,11 @@ def look_up_category_id(input_name)
 end
 
 
-#delete an item
+#Delete an item
   #ask the user for the item they want to delete
   #remove the item from the table with a SQL command
 def delete_item(name)
-  $DB.execute("DELETE FROM items WHERE name=? LIMIT 1", [name])
+  $DB.execute("DELETE FROM items WHERE item_name=? LIMIT 1", [name])
 end
 
 
@@ -105,7 +104,7 @@ end
   #Up case the categories
   #down case the items
 def pretty_list
-items_list_from_db = $DB.execute("SELECT category.name, items.name, items.quantity FROM category INNER JOIN items ON items.category_name = category.id")
+items_list_from_db = $DB.execute("SELECT category.name, items.item_name, items.quantity FROM category INNER JOIN items ON items.category_name = category.id")
 list = {}
 items_list_from_db.each do |hash|
     if list.include?(hash[0])
@@ -154,11 +153,7 @@ end
 
 #BETA!
 #Send the list via text message
-  #RIGHT NOW IT CAN ONLY TEXT ME
-  #BUT
-  #If this were a real thing, have the user provide their phone number
-  #send list via text
-  # Yeah, took this out because I didn't want my phone number and auth code for twilio chilling on github
+   #Still in progress
 
 
 #DRIVER CODE
@@ -181,6 +176,8 @@ $DB.execute(create_item_table)
     #UNTIL the user types "done"
       #ask for the category
       #show the updated list (with index)
+puts "If you loaded a list, it has these categories already:"
+p pretty_category_list
 puts "Okay! Let's add some categories to this list. Add them in the order you normally shop through the store for easiest use. Type 'done' when you're ready to move on:"
 input_category = gets.chomp.downcase
 category_list = []
@@ -193,12 +190,12 @@ category_list = []
   end
 
 
-    #Next, show the finished list and ask if everything is in the correct order
-      #IF yes, go on to the next step
-      #ELSE
-        #Ask the user which number is wrong and what number it should be
-        #Delete from old place and insert into new place
-    #Repeat until user is happy
+#Next, show the finished list and ask if everything is in the correct order
+   #IF yes, go on to the next step
+   #ELSE
+     #Ask the user which number is wrong and what number it should be
+     #Delete from old place and insert into new place
+   #Repeat until user is happy
 puts "Great! Does the order on this look good to you?"
 category_string_pre_check(category_list)
 puts "If you want to move an item, type the number. Otherwise, enter 'done':"
@@ -232,7 +229,6 @@ desired_function = gets.chomp.downcase
 
 until desired_function == "done"
   case
-
     #Ask the user to add items one by one
       #Loop UNTIL they type 'done'
       #add each item to the table
@@ -334,7 +330,6 @@ end
 
 
 #print a physical list for those kinds of people who walk into a bookstore and wax poetic about 'holding a book and turning the pages':
-
 puts "Save your file so you can print it and access it later:"
 puts "Please name your file. This will create a few file or overwrite an old file of the same name."
 file_name = gets.chomp.downcase
@@ -343,9 +338,8 @@ write_to_file(pretty_list, file_name)
 
 #text a copy to those who are more practical, forgetful, or eco-conscious:
 #puts "Text a copy of this list to yourself or some unsuspecting victim:"
-#This would ask the user for their phone number if I didn't have a trial version of this API
 #send_text_message(pretty_list)
-
+#Not functional at the moment. Sorry! It's like, 70% of the way there
 
 puts "Happy shopping!"
 
