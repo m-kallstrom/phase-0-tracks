@@ -1,0 +1,33 @@
+test_list
+fresh produce
+meat
+cereal
+canned vegetables
+snacks
+drinks
+paper goods
+frozen
+dairy
+bakery
+done
+done
+add item
+frozen, pizza, 3
+dairy, whole milk, 1
+fresh produce, apples, 7
+frozen, broccoli and cauliflower mix, 4
+bakery, onion bagels, 3
+bakery, sourdough bread, 1
+done
+update quantity
+bakery, onion bagels, 4
+dairy, whole milk, 2
+done
+category
+register impulse-buy snacks
+done
+delete options
+one
+sourdough bread
+done
+test_list_file
