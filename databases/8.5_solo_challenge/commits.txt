@@ -1,0 +1,81 @@
+List of Commits since I had to delete the history because of sensitive info in previous versions of the file. Which apparently permanently deleting something in GitHub is a complete cluster, so I just deactivated the auth token instead.
+
+
+Commits on Jul 30, 2017
+ @m-kallstrom
+clean up misc db and txt files
+m-kallstrom committed 40 minutes ago
+94cf414
+ @m-kallstrom
+Clean up pseudocode
+m-kallstrom committed an hour ago
+31a19cb
+ @m-kallstrom
+add gem for improved file display
+m-kallstrom committed an hour ago
+05305b8
+Commits on Jul 29, 2017
+ @m-kallstrom
+debug category add driver code
+m-kallstrom committed 8 hours ago
+793ab0f
+ @m-kallstrom
+update file maker method to take in user input file name
+m-kallstrom committed 8 hours ago
+210c4d1
+ @m-kallstrom
+add method to print category list
+m-kallstrom committed 9 hours ago
+849b70e
+ @m-kallstrom
+change driver code to loop through add/update/delete options until us… …
+m-kallstrom committed 9 hours ago
+c378e4d
+ @m-kallstrom
+add method to send list via text message--untested
+m-kallstrom committed 10 hours ago
+114a091
+ @m-kallstrom
+add ability to save list to a file for printing
+m-kallstrom committed 10 hours ago
+b08806c
+ @m-kallstrom
+add method for printing out appealing-to-humans list of items
+m-kallstrom committed 23 hours ago
+ba86005
+ @m-kallstrom
+add driver code to get categories from user and add to the category t… …
+m-kallstrom committed a day ago
+f9ac9f4
+ @m-kallstrom
+add ability to create or reuse a database
+m-kallstrom committed a day ago
+6cf7260
+ @m-kallstrom
+add and test method to delete an item from the item table
+m-kallstrom committed a day ago
+45ad5ff
+ @m-kallstrom
+add methods to add items to category and item tables
+m-kallstrom committed a day ago
+d8d42d0
+ @m-kallstrom
+test SQL table creation
+m-kallstrom committed a day ago
+e801606
+Commits on Jul 28, 2017
+ @m-kallstrom
+delete item class due to unnecessary complexity and little return value
+m-kallstrom committed a day ago
+a8e16c2
+ @m-kallstrom
+Add class for items
+m-kallstrom committed a day ago
+03f7367
+ @m-kallstrom
+pseudocode overall structure of program
+m-kallstrom committed a day ago
+e37cbdc
+ @m-kallstrom
+set up require and sqlite link
+m-kallstrom committed a day ago
