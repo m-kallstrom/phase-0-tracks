@@ -8,12 +8,6 @@ require 'sqlite3'
 require 'hirb'
 require 'twilio-ruby'
 
-#Auth stuff for text messages:
-client = Twilio::REST::Client.new(
-  ENV['AC77a8176b43f4ea62f3a5da4e4753ca1a'],
-  ENV['71a42cf85828237e76b4531103039e81']
-)
-
 
 #Name your database or load an old one
   #IF it doesn't exist, create it
@@ -164,13 +158,7 @@ end
   #BUT
   #If this were a real thing, have the user provide their phone number
   #send list via text
-def send_text_message(list)
-  client.messages.create(
-  from: "+19149964976",
-  to: "+19144827293",
-  body: list
-)
-end
+  # Yeah, took this out because I didn't want my phone number and auth code for twilio chilling on github
 
 
 #DRIVER CODE
@@ -184,9 +172,11 @@ puts "(Type carefully because it will create a new list entirely if it's off. No
     list_name = gets.chomp.downcase
     make_or_resuse_a_db(list_name)
 
-
+#Make the tables
 $DB.execute(create_category_table)
 $DB.execute(create_item_table)
+
+
  #Ask user for a list of categories in order of how they go around the grocery store
     #UNTIL the user types "done"
       #ask for the category
@@ -201,7 +191,7 @@ category_list = []
     puts "Add another or type 'done':"
     input_category = gets.chomp.downcase
   end
-  ####CURRENTLY OVERWRITES INSTEAD OF REJECTING
+
 
     #Next, show the finished list and ask if everything is in the correct order
       #IF yes, go on to the next step
@@ -244,11 +234,10 @@ until desired_function == "done"
   case
 
     #Ask the user to add items one by one
-      #POSSIBLY ASK FOR EACH PIECE INDIVIDUALLY? or to use quotes?
       #Loop UNTIL they type 'done'
       #add each item to the table
       #print the updated table each time
-    when desired_function.include?("add") ##THIS NEEDS FIXING
+    when desired_function.include?("item")
       puts "Add items separated by commas in order of: category, item name and then the quantity (optional)"
       puts "Like this:  frozen, pizza, 3"
       input_item = gets.chomp.downcase
@@ -317,9 +306,8 @@ until desired_function == "done"
 
 
     #Ask user what category to add
-      #Print a list of the categories, and tell them they only show up on the list if they have an item in them.
+      #Print a list of the categories, and tell them they only show up on the list if they have an item in them
       #Check that it's not on the list
-      #Tell them it'll default to the end and they're stuck with that in this version
       #Add the new category to the table
     when desired_function.include?("category")
       puts "A category doesn't show on the usual list until an item is added to it. These are your current categories:"
@@ -361,12 +349,3 @@ write_to_file(pretty_list, file_name)
 
 puts "Happy shopping!"
 
-def sanitize(filename)
-  # Bad as defined by wikipedia: https://en.wikipedia.org/wiki/Filename#Reserved_characters_and_words
-  # Also have to escape the backslash
-  bad_chars = [ '/', '\\', '?', '%', '*', ':', '|', '"', '<', '>', '.', ' ' ]
-  bad_chars.each do |bad_char|
-    filename.gsub!(bad_char, '_')
-  end
-  filename
-end
