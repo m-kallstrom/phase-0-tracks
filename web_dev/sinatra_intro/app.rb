@@ -23,6 +23,18 @@ get '/:person_1/loves/:person_2' do
   "#{params[:person_1]} loves #{params[:person_2]}"
 end
 
+get '/contact' do
+  "880-2105 JAPAN <br> Miyazaki-ken, Miyazaki-shi<br> Otsukadai Nishi 2-1-3<br> Toshikikou Jutaku 2-903<br>"
+end
+
+get '/great_job' do
+  if
+    "Good job, #{params[:name]}!"
+  else
+    "Good job!"
+  end
+end
+
 # write a GET route that retrieves
 # all student data
 get '/students' do
@@ -44,3 +56,4 @@ get '/students/:id' do
   student = db.execute("SELECT * FROM students WHERE id=?", [params[:id]])[0]
   student.to_s
 end
+
