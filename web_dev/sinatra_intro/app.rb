@@ -28,11 +28,17 @@ get '/contact' do
 end
 
 get '/great_job' do
-  if
-    "Good job, #{params[:name]}!"
+  name = params[:name]
+  if name
+    "Good job, #{name}!"
   else
     "Good job!"
   end
+end
+
+get '/:number_1/plus/:number_2' do
+  result = params[:number_1].to_i + params[:number_2].to_i
+  result.to_s
 end
 
 # write a GET route that retrieves
@@ -57,3 +63,18 @@ get '/students/:id' do
   student.to_s
 end
 
+#RESEARCH!
+
+#Is Sinatra the only web app library in Ruby? What are some others?
+
+#I see a lot of results for Rails, but they call it a framework. But then some pages also call Sinatra a framework? Changing my google search term to 'Sinatra alternative' gave the following additional ones: Cuba, Padrino, and Lotus
+
+
+#Are SQLite and the sqlite3 gem your only options for using a database with Sinatra? What are some others?
+
+#ActiveRecord, Datamapper, full calorie SQL
+
+
+#What is meant by the term web stack?
+
+#A web stack refers to all the different pieces you need to get your website up and running. At the minimum you need an operating system, a programming language, a database, and a web server. One of the frequently used combinations is "LAMP", which stands for: Linux, Apache, MySQL, PHP.
