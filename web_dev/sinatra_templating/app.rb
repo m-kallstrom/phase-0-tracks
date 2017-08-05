@@ -17,11 +17,18 @@ get '/students/new' do
   erb :new_student
 end
 
+get '/students/by_age' do
+  @students = db.execute("SELECT * FROM students")
+  erb :by_age
+end
+
+
 # create new students via
 # a form
 post '/students' do
   db.execute("INSERT INTO students (name, campus, age) VALUES (?,?,?)", [params['name'], params['campus'], params['age'].to_i])
   redirect '/'
 end
+
 
 # add static resources

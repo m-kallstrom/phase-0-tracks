@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Students by Age</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>STUDENTS BY AGE</h1>
+  <p>
+    <% @sorted_students = @students.sort_by { |key, value| key['age']} %>
+    <ul>
+    <% @sorted_students.each do |student| %>
+    <li><%= student['name'] %>, <%= student['age'] %> </li>
+    <% end %>
+    </ul>
+
+  </p>
+
+</body>
+</html>
