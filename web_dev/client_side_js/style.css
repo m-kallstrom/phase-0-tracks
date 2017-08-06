@@ -1,0 +1,17 @@
+.header {
+  font-size: large;
+  font-weight: bold;
+  text-align: center;
+}
+
+.list_title {
+  font-size: large;
+  font-weight: bold;
+}
+
+button, img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1em;
+}
